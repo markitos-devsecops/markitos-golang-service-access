@@ -2,7 +2,7 @@ package domain_test
 
 import (
 	"errors"
-	"markitos-service-access/internal/domain"
+	"markitos-golang-service-access/internal/domain"
 	"strings"
 	"testing"
 

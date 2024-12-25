@@ -1,4 +1,4 @@
-module markitos-service-access
+module markitos-golang-service-access
 
 go 1.23.4
 

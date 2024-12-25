@@ -1,7 +1,7 @@
 package api
 
 import (
-	"markitos-service-access/internal/services"
+	"markitos-golang-service-access/internal/services"
 	"net/http"
 	"os"
 	"strconv"

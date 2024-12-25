@@ -2,8 +2,8 @@ package services_test
 
 import (
 	"errors"
-	"markitos-service-access/internal/domain"
-	"markitos-service-access/internal/services"
+	"markitos-golang-service-access/internal/domain"
+	"markitos-golang-service-access/internal/services"
 	"testing"
 
 	"github.com/stretchr/testify/require"

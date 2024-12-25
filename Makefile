@@ -23,10 +23,10 @@ testv:
 #:[.''.]:>-------------------------------------------
 #:[.''.]:><database - migrations - sqlc>
 createdb:
-	docker exec -it markitos-svc-postgres createdb --username=admin --owner=admin markitos-service-access
+	docker exec -it markitos-svc-postgres createdb --username=admin --owner=admin markitos-golang-service-access
 dropdb: 
-	docker exec -it markitos-svc-postgres psql -U admin -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'markitos-service-access' AND pid <> pg_backend_pid();"
-	docker exec -it markitos-svc-postgres dropdb -U admin markitos-service-access
+	docker exec -it markitos-svc-postgres psql -U admin -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'markitos-golang-service-access' AND pid <> pg_backend_pid();"
+	docker exec -it markitos-svc-postgres dropdb -U admin markitos-golang-service-access
 #:[.''.]:>-------------------------------------------
 
 
@@ -47,16 +47,16 @@ appsec: appsec-sast appsec-sca
 image-push:
 	@echo "" && \
 	echo "" && \
-	echo "Building image markitos-service-access:$(or $(TAG),1.0.0)" && \
-	docker build -t ghcr.io/markitos-es/markitos-service-access:$(or $(TAG),1.0.0) . && \
+	echo "Building image markitos-golang-service-access:$(or $(TAG),1.0.0)" && \
+	docker build -t ghcr.io/markitos-es/markitos-golang-service-access:$(or $(TAG),1.0.0) . && \
 	echo "" && \
-	echo "Pushing image markitos-service-access:$(or $(TAG),1.0.0)" && \
-	docker push ghcr.io/markitos-es/markitos-service-access:$(or $(TAG),1.0.0) && \
+	echo "Pushing image markitos-golang-service-access:$(or $(TAG),1.0.0)" && \
+	docker push ghcr.io/markitos-es/markitos-golang-service-access:$(or $(TAG),1.0.0) && \
 	echo "" && \
-	echo "Image markitos-service-access:$(or $(TAG),1.0.0) pushed" && \
-	docker image rm --force ghcr.io/markitos-es/markitos-service-access:$(or $(TAG),1.0.0)
+	echo "Image markitos-golang-service-access:$(or $(TAG),1.0.0) pushed" && \
+	docker image rm --force ghcr.io/markitos-es/markitos-golang-service-access:$(or $(TAG),1.0.0)
 	echo "" && \
-	echo "Image markitos-service-access:$(or $(TAG),1.0.0) removed"
+	echo "Image markitos-golang-service-access:$(or $(TAG),1.0.0) removed"
 	echo "" && \
 	echo "Done!"
 #:[.''.]:>-------------------------------------------

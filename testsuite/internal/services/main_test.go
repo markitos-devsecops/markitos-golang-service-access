@@ -1,8 +1,8 @@
 package services_test
 
 import (
-	"markitos-service-access/internal/domain"
-	"markitos-service-access/internal/services"
+	"markitos-golang-service-access/internal/domain"
+	"markitos-golang-service-access/internal/services"
 	"os"
 	"testing"
 )

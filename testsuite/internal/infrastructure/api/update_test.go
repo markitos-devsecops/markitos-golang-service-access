@@ -7,7 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"markitos-service-access/internal/domain"
+	"markitos-golang-service-access/internal/domain"
 
 	"github.com/stretchr/testify/assert"
 )

@@ -1,7 +1,7 @@
 package services
 
 import (
-	"markitos-service-access/internal/domain"
+	"markitos-golang-service-access/internal/domain"
 	"time"
 )
 

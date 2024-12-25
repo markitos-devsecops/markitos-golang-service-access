@@ -2,9 +2,9 @@ package main
 
 import (
 	"log"
-	"markitos-service-access/internal/domain"
-	"markitos-service-access/internal/infrastructure/api"
-	"markitos-service-access/internal/infrastructure/database"
+	"markitos-golang-service-access/internal/domain"
+	"markitos-golang-service-access/internal/infrastructure/api"
+	"markitos-golang-service-access/internal/infrastructure/database"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/postgres"
@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	APP_BBDD_DSN string = "host=localhost user=admin password=admin dbname=markitos-service-access sslmode=disable TimeZone=Europe/Madrid port=5432 sslmode=disable"
+	APP_BBDD_DSN string = "host=localhost user=admin password=admin dbname=markitos-golang-service-access sslmode=disable TimeZone=Europe/Madrid port=5432 sslmode=disable"
 	APP_ADDRESS  string = ":3000"
 )
 
@@ -20,7 +20,7 @@ func main() {
 
 	log.Println("['.']:>")
 	log.Println("['.']:>--------------------------------------------")
-	log.Println("['.']:>--- <starting markitos-service-access>")
+	log.Println("['.']:>--- <starting markitos-golang-service-access>")
 	db, err := gorm.Open(postgres.Open(APP_BBDD_DSN), &gorm.Config{})
 	if err != nil {
 		log.Fatal(err)
@@ -38,7 +38,7 @@ func main() {
 	server := api.NewServer(APP_ADDRESS, repository)
 	log.Println("['.']:>------- New server created")
 	log.Println("['.']:>----- </server.api>")
-	log.Println("['.']:>--- </starting markitos-service-access>")
+	log.Println("['.']:>--- </starting markitos-golang-service-access>")
 	log.Println("['.']:>--------------------------------------------")
 	log.Println("['.']:>")
 	err = server.Run()

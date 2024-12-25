@@ -2,7 +2,7 @@ package database
 
 import (
 	"fmt"
-	"markitos-service-access/internal/domain"
+	"markitos-golang-service-access/internal/domain"
 
 	"gorm.io/gorm"
 )
