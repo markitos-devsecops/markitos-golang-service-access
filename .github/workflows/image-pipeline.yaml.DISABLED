@@ -1,0 +1,70 @@
+name: Database Pipeline
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-24.04
+
+    # services:
+    #   markitos-golang-service-postgres:
+    #     image: postgres:latest
+    #     ports:
+    #       - 5432:5432
+    #     env:
+    #       POSTGRES_DB: markitos-golang-service-access
+    #       POSTGRES_USER: admin
+    #       POSTGRES_PASSWORD: admin
+    #     options: >-
+    #       --health-cmd pg_isready
+    #       --health-interval 10s
+    #       --health-timeout 5s
+    #       --health-retries 5
+    #       --name markitos-golang-service-postgres
+    #       --hostname markitos-golang-service-postgres
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    # - name: Set up Go
+    #   uses: actions/setup-go@v2
+    #   with:
+    #     go-version: 1.23
+
+    # - name: Install dependencies
+    #   run: go mod download
+
+    # - name: Wait for PostgreSQL to be ready
+    #   run: |
+    #     echo "Esperando a que el contenedor PostgreSQL esté listo..."
+    #     until docker ps --filter "ancestor=postgres:latest" --format "{{.ID}}" > /dev/null; do
+    #       echo "Esperando..."; 
+    #       sleep 1;
+    #     done
+    #     until docker exec $(docker ps --filter "ancestor=postgres:latest" --format "{{.ID}}") pg_isready -U admin -h localhost -p 5432; do
+    #       echo "Esperando que PostgreSQL esté listo...";
+    #       sleep 1;
+    #     done
+    #     echo "PostgreSQL está listo."
+
+    # - name: Check Docker PostgreSQL container
+    #   run: docker ps --filter "ancestor=postgres:latest"
+
+    # - name: Create database
+    #   run: |
+    #     make createdb
+
+    # - name: Run tests
+    #   run: make testcv
+
+    # - name: Run AppSec tests
+    #   run: make appsec
+
+    - name: Build Docker Image
+      run: |
+        echo "Construyendo imagen Docker..."
+        echo "PUBLIC_IMAGE_TOKEN: ${{ secrets.PUBLISH_IMAGE_TOKEN }}"
+        echo "PUBLIC_IMAGE_REGISTRY: ${{ secrets.PUBLISH_IMAGE_REGISTRY }}"
+        echo "PUBLIC_IMAGE_NAME: ${{ secrets.PUBLISH_IMAGE_NAME }}"
+        make docker-login-cicd PUBLISH_IMAGE_TOKEN=${{ env.PUBLISH_IMAGE_TOKEN }}

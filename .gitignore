@@ -64,3 +64,4 @@ vendor/**
 .dccache
 **/.dccache
 
+app.env
