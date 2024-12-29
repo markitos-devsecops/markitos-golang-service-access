@@ -41,7 +41,7 @@ func (s *UserInMemoryRepository) Update(user *User) error {
 	if err != nil {
 		return err
 	}
-	existingUser.Message = user.Message
+	existingUser.Username = user.Username
 	existingUser.UpdatedAt = user.UpdatedAt
 	return nil
 }
@@ -57,7 +57,7 @@ func (s *UserInMemoryRepository) List() ([]*User, error) {
 func (s *UserInMemoryRepository) SearchAndPaginate(searchTerm string, pageNumber int, pageSize int) ([]*User, error) {
 	var filtered []*User
 	for _, user := range s.users {
-		if strings.Contains(user.Message, searchTerm) {
+		if strings.Contains(user.Username, searchTerm) {
 			filtered = append(filtered, user)
 		}
 	}

@@ -26,7 +26,7 @@ func TestUserCreate(t *testing.T) {
 	err = db.First(&result, "id = ?", user.Id).Error
 	require.NoError(t, err)
 	require.Equal(t, user.Id, result.Id)
-	require.Equal(t, user.Message, result.Message)
+	require.Equal(t, user.Username, result.Username)
 	require.WithinDuration(t, user.CreatedAt, result.CreatedAt, time.Second)
 	require.WithinDuration(t, user.UpdatedAt, result.UpdatedAt, time.Second)
 
@@ -38,14 +38,14 @@ func TestSearch(t *testing.T) {
 	cleanDB(db)
 	repo := database.NewUserPostgresRepository(db)
 
-	randomMessage := "Test " + domain.RandomString(10)
-	user := &domain.User{Id: domain.UUIDv4(), Message: randomMessage}
+	email := domain.RandomEmail()
+	user := &domain.User{Id: domain.UUIDv4(), Username: email}
 	db.Create(user)
 
-	results, err := repo.SearchAndPaginate(randomMessage, 1, 10)
+	results, err := repo.SearchAndPaginate(email, 1, 10)
 	assert.NoError(t, err)
 	assert.Len(t, results, 1)
-	assert.Equal(t, randomMessage, results[0].Message)
+	assert.Equal(t, email, results[0].Username)
 
 	cleanDB(db)
 }
@@ -72,14 +72,14 @@ func TestUserUpdate(t *testing.T) {
 	user, _ := domain.NewUser(domain.UUIDv4(), "Hello, World!")
 	db.Create(user)
 
-	user.Message = "Updated Message"
+	user.Username = "Updated Message"
 	err := repository.Update(user)
 	require.NoError(t, err)
 
 	var result domain.User
 	err = db.First(&result, "id = ?", user.Id).Error
 	require.NoError(t, err)
-	require.Equal(t, "Updated Message", result.Message)
+	require.Equal(t, "Updated Message", result.Username)
 }
 
 func TestUserOne(t *testing.T) {
@@ -93,7 +93,7 @@ func TestUserOne(t *testing.T) {
 	require.NoError(t, err)
 	require.NotNil(t, result)
 	require.Equal(t, user.Id, result.Id)
-	require.Equal(t, user.Message, result.Message)
+	require.Equal(t, user.Username, result.Username)
 }
 
 func TestUserList(t *testing.T) {
@@ -102,7 +102,7 @@ func TestUserList(t *testing.T) {
 	repository := database.NewUserPostgresRepository(db)
 
 	for i := 0; i < 5; i++ {
-		user := &domain.User{Id: domain.UUIDv4(), Message: domain.RandomString(10)}
+		user := &domain.User{Id: domain.UUIDv4(), Username: domain.RandomString(10)}
 		db.Create(user)
 	}
 
@@ -116,7 +116,7 @@ func TestPagination(t *testing.T) {
 	repo := database.NewUserPostgresRepository(db)
 
 	for i := 0; i < 15; i++ {
-		user := &domain.User{Id: domain.UUIDv4(), Message: domain.RandomString(10)}
+		user := &domain.User{Id: domain.UUIDv4(), Username: domain.RandomString(10)}
 		db.Create(user)
 	}
 
@@ -134,7 +134,7 @@ func TestSearchAndPagination(t *testing.T) {
 
 	for i := 0; i < 25; i++ {
 		message := "Test User " + domain.RandomString(5)
-		user := &domain.User{Id: domain.UUIDv4(), Message: message}
+		user := &domain.User{Id: domain.UUIDv4(), Username: message}
 		db.Create(user)
 	}
 

@@ -11,42 +11,25 @@ import (
 
 func TestCanUpdateAUser(t *testing.T) {
 	createdUser, err := userCreateService.Execute(services.UserCreateRequest{
-		Message: VALID_MESSAGE,
+		Username: domain.RandomEmail(),
 	})
+
 	require.NoError(t, err)
 
 	model, err := userUpdateService.Execute(services.UserUpdateRequest{
-		Id:      createdUser.Id,
-		Message: createdUser.Message + " updated",
+		Id: createdUser.Id,
 	})
 
 	require.NoError(t, err)
 	require.Equal(t, createdUser.Id, model.Id)
-	require.NotEqual(t, createdUser.Message, model.Message)
-	require.Equal(t, createdUser.Message+" updated", model.Message)
+	require.NotEqual(t, createdUser.Username, model.Username)
 
-	require.True(t, userMockSpyRepository.(*MockSpyUserRepository).UpdateHaveBeenCalledWithMessage(model))
-}
-
-func TestCantUpdatOneUserWithEmptyMessage(t *testing.T) {
-	var request services.UserUpdateRequest = services.UserUpdateRequest{
-		Id:      VALID_UUIDV4,
-		Message: "",
-	}
-
-	response, err := userUpdateService.Execute(request)
-	require.Nil(t, response)
-	require.Error(t, err)
-
-	var invalidErr *domain.UserInvalidMessageError
-	require.True(t, errors.As(err, &invalidErr))
-	require.Error(t, err)
+	require.True(t, userMockSpyRepository.(*MockSpyUserRepository).UpdateHaveBeenCalledWithUsername(model))
 }
 
 func TestCantUpdatOneUserWithEmptyId(t *testing.T) {
 	var request services.UserUpdateRequest = services.UserUpdateRequest{
-		Id:      "",
-		Message: VALID_MESSAGE,
+		Id: "",
 	}
 
 	response, err := userUpdateService.Execute(request)
@@ -60,8 +43,7 @@ func TestCantUpdatOneUserWithEmptyId(t *testing.T) {
 
 func TestCantUpdatOneUserWithInvalidId(t *testing.T) {
 	var request services.UserUpdateRequest = services.UserUpdateRequest{
-		Id:      "invalid-id",
-		Message: VALID_MESSAGE,
+		Id: "invalid-id",
 	}
 
 	response, err := userUpdateService.Execute(request)

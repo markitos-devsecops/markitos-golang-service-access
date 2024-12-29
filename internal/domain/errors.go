@@ -20,18 +20,18 @@ func (e *UserInvalidIdError) Error() string {
 }
 
 // --------------------------------------------------------------
-const USER_INVALID_MESSAGE_PREFIX = "invalid message"
+const USER_INVALID_USERNAME_PREFIX = "invalid username"
 
-type UserInvalidMessageError struct {
-	message string
+type UserInvalidUsernameError struct {
+	username string
 }
 
-func NewUserInvalidMessageError(message string) error {
-	return &UserInvalidMessageError{message: message}
+func NewUserInvalidUsernameError(username string) error {
+	return &UserInvalidUsernameError{username: username}
 }
 
-func (e *UserInvalidMessageError) Error() string {
-	return fmt.Sprintf("%s: %s", USER_INVALID_MESSAGE_PREFIX, e.message)
+func (e *UserInvalidUsernameError) Error() string {
+	return fmt.Sprintf("%s: %s", USER_INVALID_USERNAME_PREFIX, e.username)
 }
 
 // --------------------------------------------------------------

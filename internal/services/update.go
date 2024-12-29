@@ -10,18 +10,15 @@ type UserUpdateRequestUri struct {
 }
 
 type UserUpdateRequestBody struct {
-	Message string `json:"message" binding:"required"`
 }
 
 type UserUpdateRequest struct {
-	Id      string `uri:"id" binding:"required,uuid"`
-	Message string `json:"message" binding:"required"`
+	Id string `uri:"id" binding:"required,uuid"`
 }
 
-func NewUserUpdateRequest(id string, message string) *UserUpdateRequest {
+func NewUserUpdateRequest(id string) *UserUpdateRequest {
 	return &UserUpdateRequest{
-		Id:      id,
-		Message: message,
+		Id: id,
 	}
 }
 
@@ -34,22 +31,22 @@ func NewUserUpdateService(repository domain.UserRepository) UserUpdateService {
 }
 
 func (s *UserUpdateService) Execute(request UserUpdateRequest) (*domain.User, error) {
-	securedUser, err := domain.NewUser(request.Id, request.Message)
+	secureId, err := domain.NewUserId(request.Id)
 	if err != nil {
 		return nil, err
 	}
 
-	userToUpdate, errExistingUser := s.Repository.One(&securedUser.Id)
-	if errExistingUser != nil {
-		return nil, errExistingUser
-	}
-
-	userToUpdate.Message = securedUser.Message
-	userToUpdate.UpdatedAt = time.Now()
-	err = s.Repository.Update(userToUpdate)
+	value := secureId.Value()
+	existingUser, err := s.Repository.One(&value)
 	if err != nil {
 		return nil, err
 	}
 
-	return userToUpdate, nil
+	existingUser.UpdatedAt = time.Now()
+	err = s.Repository.Update(existingUser)
+	if err != nil {
+		return nil, err
+	}
+
+	return existingUser, nil
 }

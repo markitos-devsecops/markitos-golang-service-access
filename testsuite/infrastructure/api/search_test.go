@@ -14,7 +14,7 @@ import (
 func TestUserSearchHandler_Success(t *testing.T) {
 	for i := 0; i < 15; i++ {
 		message := "Test User " + domain.RandomString(5)
-		user := &domain.User{Id: domain.UUIDv4(), Message: message}
+		user := &domain.User{Id: domain.UUIDv4(), Username: message}
 		userRepository.Create(user)
 	}
 

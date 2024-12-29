@@ -12,7 +12,7 @@ import (
 )
 
 func TestUserOneHandler_Success(t *testing.T) {
-	user := &domain.User{Id: domain.UUIDv4(), Message: "Test User"}
+	user := &domain.User{Id: domain.UUIDv4(), Username: "Test User"}
 	userRepository.Create(user)
 
 	recorder := httptest.NewRecorder()
@@ -25,7 +25,7 @@ func TestUserOneHandler_Success(t *testing.T) {
 	err := json.Unmarshal(recorder.Body.Bytes(), &response)
 	assert.NoError(t, err)
 	assert.Equal(t, user.Id, response.Id)
-	assert.Equal(t, user.Message, response.Message)
+	assert.Equal(t, user.Username, response.Username)
 }
 
 func TestUserOneHandler_NotFound(t *testing.T) {

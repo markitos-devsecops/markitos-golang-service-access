@@ -14,19 +14,19 @@ func setupInMemoryRepo() *domain.UserInMemoryRepository {
 func TestCreate(t *testing.T) {
 	repo := setupInMemoryRepo()
 
-	user := &domain.User{Id: domain.UUIDv4(), Message: "Test User"}
+	user := &domain.User{Id: domain.UUIDv4(), Username: domain.RandomEmail()}
 	err := repo.Create(user)
 	assert.NoError(t, err)
 
 	result, err := repo.One(&user.Id)
 	assert.NoError(t, err)
-	assert.Equal(t, user.Message, result.Message)
+	assert.Equal(t, user.Username, result.Username)
 }
 
 func TestDelete(t *testing.T) {
 	repo := setupInMemoryRepo()
 
-	user := &domain.User{Id: domain.UUIDv4(), Message: "Test User"}
+	user := &domain.User{Id: domain.UUIDv4(), Username: domain.RandomEmail()}
 	repo.Create(user)
 
 	err := repo.Delete(&user.Id)
@@ -39,37 +39,39 @@ func TestDelete(t *testing.T) {
 func TestUpdate(t *testing.T) {
 	repo := setupInMemoryRepo()
 
-	user := &domain.User{Id: domain.UUIDv4(), Message: "Test User"}
+	user := &domain.User{Id: domain.UUIDv4(), Username: domain.RandomEmail()}
 	err := repo.Create(user)
 	assert.NoError(t, err)
 
 	updatedMessage := "Updated User"
-	user.Message = updatedMessage
+	user.Username = updatedMessage
 	err = repo.Update(user)
 	assert.NoError(t, err)
 
 	result, err := repo.One(&user.Id)
 	assert.NoError(t, err)
-	assert.Equal(t, updatedMessage, result.Message)
+	assert.Equal(t, updatedMessage, result.Username)
 }
 
 func TestOne(t *testing.T) {
 	repo := setupInMemoryRepo()
 
-	user := &domain.User{Id: domain.UUIDv4(), Message: "Test User"}
+	user := &domain.User{Id: domain.UUIDv4(), Username: domain.RandomEmail()}
 	err := repo.Create(user)
 	assert.NoError(t, err)
 
 	result, err := repo.One(&user.Id)
 	assert.NoError(t, err)
-	assert.Equal(t, user.Message, result.Message)
+	assert.Equal(t, user.Username, result.Username)
 }
 
 func TestList(t *testing.T) {
 	repo := setupInMemoryRepo()
 
-	user1 := &domain.User{Id: domain.UUIDv4(), Message: "Test User 1"}
-	user2 := &domain.User{Id: domain.UUIDv4(), Message: "Test User 2"}
+	email1 := domain.RandomEmail()
+	user1 := &domain.User{Id: domain.UUIDv4(), Username: email1}
+	email2 := domain.RandomEmail()
+	user2 := &domain.User{Id: domain.UUIDv4(), Username: email2}
 	err := repo.Create(user1)
 	assert.NoError(t, err)
 	err = repo.Create(user2)
@@ -84,13 +86,13 @@ func TestSearchAndPaginate(t *testing.T) {
 	repo := setupInMemoryRepo()
 
 	for i := 0; i < 25; i++ {
-		message := "Test User " + domain.RandomString(5)
-		user := &domain.User{Id: domain.UUIDv4(), Message: message}
+		email := "test_search_and_paginate_" + domain.RandomEmail()
+		user := &domain.User{Id: domain.UUIDv4(), Username: email}
 		err := repo.Create(user)
 		assert.NoError(t, err)
 	}
 
-	results, err := repo.SearchAndPaginate("Test", 2, 10)
+	results, err := repo.SearchAndPaginate("test_search_and_paginate_", 2, 10)
 	assert.NoError(t, err)
 	assert.Len(t, results, 10)
 }

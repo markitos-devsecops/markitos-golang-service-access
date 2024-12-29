@@ -7,6 +7,7 @@ import (
 	"net/http/httptest"
 	"testing"
 
+	"markitos-golang-service-access/internal/domain"
 	"markitos-golang-service-access/internal/services"
 
 	"github.com/stretchr/testify/assert"
@@ -15,7 +16,7 @@ import (
 func TestUserCreateHandler_Success(t *testing.T) {
 	recorder := httptest.NewRecorder()
 	requestBody, _ := json.Marshal(services.UserCreateRequest{
-		Message: "Test User",
+		Username: domain.RandomEmail(),
 	})
 	request, _ := http.NewRequest(http.MethodPost, "/users", bytes.NewBuffer(requestBody))
 	request.Header.Set("Content-Type", "application/json")
@@ -25,7 +26,7 @@ func TestUserCreateHandler_Success(t *testing.T) {
 	assert.Equal(t, http.StatusCreated, recorder.Code)
 }
 
-func TestUserCreateHandler_MissingMessage(t *testing.T) {
+func TestUserCreateHandler_MissingUsername(t *testing.T) {
 	recorder := httptest.NewRecorder()
 	requestBody, _ := json.Marshal(services.UserCreateRequest{})
 	request, _ := http.NewRequest(http.MethodPost, "/users", bytes.NewBuffer(requestBody))
