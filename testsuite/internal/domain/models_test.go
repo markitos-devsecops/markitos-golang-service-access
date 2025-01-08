@@ -15,7 +15,7 @@ func TestCreateUserWithEmptyId(t *testing.T) {
 	var invalidIdErr *domain.UserInvalidIdError
 	require.True(t, errors.As(err, &invalidIdErr))
 	require.Equal(t, domain.NewUserInvalidIdError("").Error(), err.Error())
-	require.True(t, strings.HasPrefix(err.Error(), domain.USER_INVALID_ID_PREFIX))
+	require.True(t, strings.HasPrefix(err.Error(), domain.USER_INVALID_ID))
 	require.Error(t, err)
 	require.Empty(t, user)
 }

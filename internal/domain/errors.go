@@ -5,7 +5,7 @@ import (
 )
 
 // --------------------------------------------------------------
-const USER_INVALID_ID_PREFIX = "invalid id"
+const USER_INVALID_ID = "invalid id"
 
 type UserInvalidIdError struct {
 	id string
@@ -16,7 +16,7 @@ func NewUserInvalidIdError(id string) error {
 }
 
 func (e *UserInvalidIdError) Error() string {
-	return fmt.Sprintf("%s: %s", USER_INVALID_ID_PREFIX, e.id)
+	return fmt.Sprintf("%s: %s", USER_INVALID_ID, e.id)
 }
 
 // --------------------------------------------------------------
