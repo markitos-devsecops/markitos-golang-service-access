@@ -46,8 +46,8 @@ func (r *UserPostgresRepository) List() ([]*domain.User, error) {
 func (r *UserPostgresRepository) SearchAndPaginate(searchTerm string, pageNumber int, pageSize int) ([]*domain.User, error) {
 	offset := (pageNumber - 1) * pageSize
 	var users []*domain.User
-	if err := r.db.Where("message ILIKE ?", fmt.Sprintf("%%%s%%", searchTerm)).
-		Order("message").
+	if err := r.db.Where("name ILIKE ?", fmt.Sprintf("%%%s%%", searchTerm)).
+		Order("name").
 		Limit(pageSize).
 		Offset(offset).
 		Find(&users).Error; err != nil {

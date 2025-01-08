@@ -10,7 +10,7 @@ import (
 )
 
 func TestCreateUserWithEmptyId(t *testing.T) {
-	user, err := domain.NewUser("", "Hello, World!")
+	user, err := domain.NewUser("", domain.PersonalName())
 
 	var invalidIdErr *domain.UserInvalidIdError
 	require.True(t, errors.As(err, &invalidIdErr))
@@ -20,13 +20,13 @@ func TestCreateUserWithEmptyId(t *testing.T) {
 	require.Empty(t, user)
 }
 
-func TestCreateUserWithEmptyMessage(t *testing.T) {
+func TestCreateUserWithEmptyName(t *testing.T) {
 	user, err := domain.NewUser(VALID_UUIDV4, "")
 
-	var invalidErr *domain.UserInvalidMessageError
+	var invalidErr *domain.UserInvalidNameError
 	require.True(t, errors.As(err, &invalidErr))
-	require.Equal(t, domain.NewUserInvalidMessageError("").Error(), err.Error())
-	require.True(t, strings.HasPrefix(err.Error(), domain.USER_INVALID_MESSAGE))
+	require.Equal(t, domain.NewUserInvalidNameError("").Error(), err.Error())
+	require.True(t, strings.HasPrefix(err.Error(), domain.USER_INVALID_NAME))
 	require.Error(t, err)
 	require.Empty(t, user)
 }

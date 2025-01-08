@@ -13,12 +13,12 @@ import (
 )
 
 func TestUserUpdateHandler_Success(t *testing.T) {
-	user := &domain.User{Id: domain.UUIDv4(), Message: "Test User"}
+	user := &domain.User{Id: domain.UUIDv4(), Name: "Test User"}
 	userRepository.Create(user)
 
-	updatedMessage := "Updated User"
+	updatedName := "Updated User"
 	requestBody, _ := json.Marshal(map[string]string{
-		"message": updatedMessage,
+		"name": updatedName,
 	})
 	recorder := httptest.NewRecorder()
 	request, _ := http.NewRequest(http.MethodPut, "/v1/users/"+user.Id, bytes.NewBuffer(requestBody))
@@ -31,12 +31,12 @@ func TestUserUpdateHandler_Success(t *testing.T) {
 	err := json.Unmarshal(recorder.Body.Bytes(), &response)
 	assert.NoError(t, err)
 	assert.Equal(t, user.Id, response.Id)
-	assert.Equal(t, updatedMessage, response.Message)
+	assert.Equal(t, updatedName, response.Name)
 }
 
 func TestUserUpdateHandler_InvalidID(t *testing.T) {
 	requestBody, _ := json.Marshal(map[string]string{
-		"message": "Updated User",
+		"name": "Updated User",
 	})
 	recorder := httptest.NewRecorder()
 	request, _ := http.NewRequest(http.MethodPut, "/v1/users/invalid-id", bytes.NewBuffer(requestBody))
@@ -47,8 +47,8 @@ func TestUserUpdateHandler_InvalidID(t *testing.T) {
 	assert.Equal(t, http.StatusBadRequest, recorder.Code)
 }
 
-func TestUserUpdateHandler_MissingMessage(t *testing.T) {
-	user := &domain.User{Id: domain.UUIDv4(), Message: "Test User"}
+func TestUserUpdateHandler_MissingName(t *testing.T) {
+	user := &domain.User{Id: domain.UUIDv4(), Name: "Test User"}
 	userRepository.Create(user)
 
 	requestBody, _ := json.Marshal(map[string]string{})

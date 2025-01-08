@@ -11,26 +11,26 @@ import (
 
 func TestCanCreateAUser(t *testing.T) {
 	var request services.UserCreateRequest = services.UserCreateRequest{
-		Message: VALID_MESSAGE,
+		Name: VALID_NAME,
 	}
 	response, err := userCreateService.Execute(request)
 
 	require.NoError(t, err)
 	require.True(t, domain.IsUUIDv4(response.Id))
-	require.Equal(t, VALID_MESSAGE, response.Message)
-	require.True(t, userMockSpyRepository.(*MockSpyUserRepository).CreateHaveBeenCalledWithMessage(response))
+	require.Equal(t, VALID_NAME, response.Name)
+	require.True(t, userMockSpyRepository.(*MockSpyUserRepository).CreateHaveBeenCalledWithName(response))
 }
 
-func TestCantCreateAUserWithEmptyMessage(t *testing.T) {
+func TestCantCreateAUserWithEmptyName(t *testing.T) {
 	var request services.UserCreateRequest = services.UserCreateRequest{
-		Message: "",
+		Name: "",
 	}
 
 	response, err := userCreateService.Execute(request)
 	require.Nil(t, response)
 	require.Error(t, err)
 
-	var invalidErr *domain.UserInvalidMessageError
+	var invalidErr *domain.UserInvalidNameError
 	require.True(t, errors.As(err, &invalidErr))
 	require.Error(t, err)
 }

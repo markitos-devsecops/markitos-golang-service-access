@@ -15,8 +15,8 @@ func TestUserListHandler_Success(t *testing.T) {
 	server := setupTestServer()
 	repo := server.Repository().(*domain.UserInMemoryRepository)
 
-	user1 := &domain.User{Id: domain.UUIDv4(), Message: "Test User 1"}
-	user2 := &domain.User{Id: domain.UUIDv4(), Message: "Test User 2"}
+	user1 := &domain.User{Id: domain.UUIDv4(), Name: "Test User 1"}
+	user2 := &domain.User{Id: domain.UUIDv4(), Name: "Test User 2"}
 	repo.Create(user1)
 	repo.Create(user2)
 
@@ -30,7 +30,7 @@ func TestUserListHandler_Success(t *testing.T) {
 	err := json.Unmarshal(recorder.Body.Bytes(), &response)
 	assert.NoError(t, err)
 	assert.Len(t, response, 2)
-	messages := []string{response[0].Message, response[1].Message}
-	assert.Contains(t, messages, "Test User 1")
-	assert.Contains(t, messages, "Test User 2")
+	names := []string{response[0].Name, response[1].Name}
+	assert.Contains(t, names, "Test User 1")
+	assert.Contains(t, names, "Test User 2")
 }

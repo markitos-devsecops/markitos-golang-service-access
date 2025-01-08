@@ -19,17 +19,17 @@ func (id *UserId) Value() string {
 	return id.value
 }
 
-type UserMessage struct {
+type UserName struct {
 	value string
 }
 
-func NewUserMessage(value string) (*UserMessage, error) {
+func NewUserName(value string) (*UserName, error) {
 	if value == "" {
-		return nil, NewUserInvalidMessageError(value)
+		return nil, NewUserInvalidNameError(value)
 	}
-	return &UserMessage{value: value}, nil
+	return &UserName{value: value}, nil
 }
 
-func (msg *UserMessage) Value() string {
+func (msg *UserName) Value() string {
 	return msg.value
 }

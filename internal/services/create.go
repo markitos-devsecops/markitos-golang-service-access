@@ -5,11 +5,11 @@ import (
 )
 
 type UserCreateRequest struct {
-	Message string `json:"message" binding:"required"`
+	Name string `json:"name" binding:"required"`
 }
 
-func NewBolilerCreateRequest(message string) UserCreateRequest {
-	return UserCreateRequest{Message: message}
+func NewBolilerCreateRequest(name string) UserCreateRequest {
+	return UserCreateRequest{Name: name}
 }
 
 type UserCreateService struct {
@@ -21,7 +21,7 @@ func NewUserCreateService(repository domain.UserRepository) UserCreateService {
 }
 
 func (s *UserCreateService) Execute(request UserCreateRequest) (*domain.User, error) {
-	user, err := domain.NewUser(domain.UUIDv4(), request.Message)
+	user, err := domain.NewUser(domain.UUIDv4(), request.Name)
 	if err != nil {
 		return nil, err
 	}

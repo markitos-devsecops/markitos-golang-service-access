@@ -6,25 +6,25 @@ import (
 
 type User struct {
 	Id        string    `json:"id" binding:"required,uuid"`
-	Message   string    `json:"message" binding:"required"`
+	Name      string    `json:"name" binding:"required"`
 	CreatedAt time.Time `json:"created_at" binding:"required,datetime" default:"now"`
 	UpdatedAt time.Time `json:"updated_at" binding:"required,datetime" default:"now"`
 }
 
-func NewUser(id, message string) (*User, error) {
-	anId, anIdError := NewUserId(id)
-	if anIdError != nil {
-		return nil, anIdError
+func NewUser(id, name string) (*User, error) {
+	anId, err := NewUserId(id)
+	if err != nil {
+		return nil, err
 	}
 
-	aMessage, aMessageError := NewUserMessage(message)
-	if aMessageError != nil {
-		return nil, aMessageError
+	aName, err := NewUserName(name)
+	if err != nil {
+		return nil, err
 	}
 
 	return &User{
 		Id:        anId.value,
-		Message:   aMessage.value,
+		Name:      aName.value,
 		CreatedAt: time.Now(),
 		UpdatedAt: time.Now(),
 	}, nil

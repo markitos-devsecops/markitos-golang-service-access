@@ -8,7 +8,7 @@ import (
 )
 
 const VALID_UUIDV4 = "f47ac10b-58cc-4372-a567-0e02b2c3d479"
-const VALID_MESSAGE = "any valid message"
+const VALID_NAME = "any valid name"
 
 var userMockSpyRepository domain.UserRepository
 var userCreateService services.UserCreateService
@@ -50,15 +50,15 @@ func (m *MockSpyUserRepository) Create(user *domain.User) error {
 }
 
 func (m *MockSpyUserRepository) CreateHaveBeenCalledWith(user *domain.User) bool {
-	var result bool = m.LastCreatedUser.Id == user.Id && m.LastCreatedUser.Message == user.Message
+	var result bool = m.LastCreatedUser.Id == user.Id && m.LastCreatedUser.Name == user.Name
 
 	m.LastCreatedUser = nil
 
 	return result
 }
 
-func (m *MockSpyUserRepository) CreateHaveBeenCalledWithMessage(user *domain.User) bool {
-	var result bool = m.LastCreatedUser.Message == user.Message
+func (m *MockSpyUserRepository) CreateHaveBeenCalledWithName(user *domain.User) bool {
+	var result bool = m.LastCreatedUser.Name == user.Name
 
 	m.LastCreatedUser = nil
 
@@ -77,38 +77,38 @@ func (m *MockSpyUserRepository) Update(user *domain.User) error {
 
 func (m *MockSpyUserRepository) One(id *string) (*domain.User, error) {
 	return &domain.User{
-		Id:      *id,
-		Message: VALID_MESSAGE,
+		Id:   *id,
+		Name: VALID_NAME,
 	}, nil
 }
 
 func (m *MockSpyUserRepository) SearchAndPaginate(searchTerm string, pageNumber int, pageSize int) ([]*domain.User, error) {
 	return []*domain.User{
 		{
-			Id:      VALID_UUIDV4,
-			Message: VALID_MESSAGE,
+			Id:   VALID_UUIDV4,
+			Name: VALID_NAME,
 		},
 	}, nil
 }
 
 func (m *MockSpyUserRepository) OneHaveBeenCalledWith(user *domain.User) bool {
-	var result bool = m.LastCreatedForOneUser.Id == user.Id && m.LastCreatedForOneUser.Message == user.Message
+	var result bool = m.LastCreatedForOneUser.Id == user.Id && m.LastCreatedForOneUser.Name == user.Name
 
 	m.LastCreatedForOneUser = nil
 
 	return result
 }
 
-func (m *MockSpyUserRepository) OneHaveBeenCalledWithMessage(user *domain.User) bool {
-	var result bool = m.LastCreatedForOneUser.Message == user.Message && m.LastCreatedForOneUser.Id == user.Id
+func (m *MockSpyUserRepository) OneHaveBeenCalledWithName(user *domain.User) bool {
+	var result bool = m.LastCreatedForOneUser.Name == user.Name && m.LastCreatedForOneUser.Id == user.Id
 
 	m.LastCreatedUser = nil
 
 	return result
 }
 
-func (m *MockSpyUserRepository) UpdateHaveBeenCalledWithMessage(user *domain.User) bool {
-	var result bool = m.LastUpdatedUser.Message == user.Message && m.LastUpdatedUser.Id == user.Id
+func (m *MockSpyUserRepository) UpdateHaveBeenCalledWithName(user *domain.User) bool {
+	var result bool = m.LastUpdatedUser.Name == user.Name && m.LastUpdatedUser.Id == user.Id
 
 	m.LastUpdatedUser = nil
 

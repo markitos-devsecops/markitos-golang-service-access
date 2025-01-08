@@ -11,42 +11,42 @@ import (
 
 func TestCanUpdateAUser(t *testing.T) {
 	createdUser, err := userCreateService.Execute(services.UserCreateRequest{
-		Message: VALID_MESSAGE,
+		Name: VALID_NAME,
 	})
 	require.NoError(t, err)
 
 	model, err := userUpdateService.Execute(services.UserUpdateRequest{
-		Id:      createdUser.Id,
-		Message: createdUser.Message + " updated",
+		Id:   createdUser.Id,
+		Name: createdUser.Name + " updated",
 	})
 
 	require.NoError(t, err)
 	require.Equal(t, createdUser.Id, model.Id)
-	require.NotEqual(t, createdUser.Message, model.Message)
-	require.Equal(t, createdUser.Message+" updated", model.Message)
+	require.NotEqual(t, createdUser.Name, model.Name)
+	require.Equal(t, createdUser.Name+" updated", model.Name)
 
-	require.True(t, userMockSpyRepository.(*MockSpyUserRepository).UpdateHaveBeenCalledWithMessage(model))
+	require.True(t, userMockSpyRepository.(*MockSpyUserRepository).UpdateHaveBeenCalledWithName(model))
 }
 
-func TestCantUpdatOneUserWithEmptyMessage(t *testing.T) {
+func TestCantUpdatOneUserWithEmptyName(t *testing.T) {
 	var request services.UserUpdateRequest = services.UserUpdateRequest{
-		Id:      VALID_UUIDV4,
-		Message: "",
+		Id:   VALID_UUIDV4,
+		Name: "",
 	}
 
 	response, err := userUpdateService.Execute(request)
 	require.Nil(t, response)
 	require.Error(t, err)
 
-	var invalidErr *domain.UserInvalidMessageError
+	var invalidErr *domain.UserInvalidNameError
 	require.True(t, errors.As(err, &invalidErr))
 	require.Error(t, err)
 }
 
 func TestCantUpdatOneUserWithEmptyId(t *testing.T) {
 	var request services.UserUpdateRequest = services.UserUpdateRequest{
-		Id:      "",
-		Message: VALID_MESSAGE,
+		Id:   "",
+		Name: VALID_NAME,
 	}
 
 	response, err := userUpdateService.Execute(request)
@@ -60,8 +60,8 @@ func TestCantUpdatOneUserWithEmptyId(t *testing.T) {
 
 func TestCantUpdatOneUserWithInvalidId(t *testing.T) {
 	var request services.UserUpdateRequest = services.UserUpdateRequest{
-		Id:      "invalid-id",
-		Message: VALID_MESSAGE,
+		Id:   "invalid-id",
+		Name: VALID_NAME,
 	}
 
 	response, err := userUpdateService.Execute(request)

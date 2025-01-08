@@ -122,8 +122,8 @@ func createRequestOrExitWithError(ctx *gin.Context) (services.UserUpdateRequest,
 	}
 
 	var request services.UserUpdateRequest = services.UserUpdateRequest{
-		Id:      requestUri.Id,
-		Message: requestBody.Message,
+		Id:   requestUri.Id,
+		Name: requestBody.Name,
 	}
 
 	return request, false

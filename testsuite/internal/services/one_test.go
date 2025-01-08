@@ -11,14 +11,14 @@ import (
 
 func TestCanGetAUser(t *testing.T) {
 	response, _ := userCreateService.Execute(services.UserCreateRequest{
-		Message: VALID_MESSAGE,
+		Name: VALID_NAME,
 	})
 	require.True(t, domain.IsUUIDv4(response.Id))
 
 	model, err := userOneService.Execute(services.NewUserOneRequest(response.Id))
 	require.NoError(t, err)
 	require.True(t, domain.IsUUIDv4(model.Id))
-	require.True(t, userMockSpyRepository.(*MockSpyUserRepository).OneHaveBeenCalledWithMessage(model))
+	require.True(t, userMockSpyRepository.(*MockSpyUserRepository).OneHaveBeenCalledWithName(model))
 }
 
 func TestCantGetOneUserWithEmptyId(t *testing.T) {
