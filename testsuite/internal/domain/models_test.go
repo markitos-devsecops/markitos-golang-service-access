@@ -26,7 +26,7 @@ func TestCreateUserWithEmptyMessage(t *testing.T) {
 	var invalidErr *domain.UserInvalidMessageError
 	require.True(t, errors.As(err, &invalidErr))
 	require.Equal(t, domain.NewUserInvalidMessageError("").Error(), err.Error())
-	require.True(t, strings.HasPrefix(err.Error(), domain.USER_INVALID_MESSAGE_PREFIX))
+	require.True(t, strings.HasPrefix(err.Error(), domain.USER_INVALID_MESSAGE))
 	require.Error(t, err)
 	require.Empty(t, user)
 }

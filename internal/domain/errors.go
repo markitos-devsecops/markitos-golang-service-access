@@ -20,7 +20,7 @@ func (e *UserInvalidIdError) Error() string {
 }
 
 // --------------------------------------------------------------
-const USER_INVALID_MESSAGE_PREFIX = "invalid message"
+const USER_INVALID_MESSAGE = "invalid message"
 
 type UserInvalidMessageError struct {
 	message string
@@ -31,11 +31,11 @@ func NewUserInvalidMessageError(message string) error {
 }
 
 func (e *UserInvalidMessageError) Error() string {
-	return fmt.Sprintf("%s: %s", USER_INVALID_MESSAGE_PREFIX, e.message)
+	return fmt.Sprintf("%s: %s", USER_INVALID_MESSAGE, e.message)
 }
 
 // --------------------------------------------------------------
-const USER_INVALID_ID_FORMAT_PREFIX = "invalid id format, must be an UUIDv4"
+const USER_INVALID_ID_FORMAT = "invalid id format, must be an UUIDv4"
 
 type UserInvalidIdFormatError struct {
 	id string
@@ -46,7 +46,7 @@ func NewUserInvalidIdFormatError(id string) error {
 }
 
 func (e *UserInvalidIdFormatError) Error() string {
-	return fmt.Sprintf("%s: %s", USER_INVALID_ID_FORMAT_PREFIX, e.id)
+	return fmt.Sprintf("%s: %s", USER_INVALID_ID_FORMAT, e.id)
 }
 
 //--------------------------------------------------------------

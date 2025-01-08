@@ -17,6 +17,7 @@ func NewUserInMemoryRepository() *UserInMemoryRepository {
 
 func (s *UserInMemoryRepository) Create(user *User) error {
 	s.users[user.Id] = user
+
 	return nil
 }
 
@@ -25,6 +26,7 @@ func (s *UserInMemoryRepository) Delete(id *string) error {
 		return errors.New("user not found")
 	}
 	delete(s.users, *id)
+
 	return nil
 }
 
@@ -33,6 +35,7 @@ func (s *UserInMemoryRepository) One(id *string) (*User, error) {
 	if !exists {
 		return nil, errors.New("user not found")
 	}
+
 	return user, nil
 }
 
@@ -43,6 +46,7 @@ func (s *UserInMemoryRepository) Update(user *User) error {
 	}
 	existingUser.Message = user.Message
 	existingUser.UpdatedAt = user.UpdatedAt
+
 	return nil
 }
 
@@ -51,6 +55,7 @@ func (s *UserInMemoryRepository) List() ([]*User, error) {
 	for _, value := range s.users {
 		result = append(result, value)
 	}
+
 	return result, nil
 }
 
