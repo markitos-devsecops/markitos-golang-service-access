@@ -19,7 +19,7 @@ func TestUserSearchHandler_Success(t *testing.T) {
 	}
 
 	recorder := httptest.NewRecorder()
-	request, _ := http.NewRequest(http.MethodGet, "/users?search=Test&page=1&size=10", nil)
+	request, _ := http.NewRequest(http.MethodGet, "/v1/users?search=Test&page=1&size=10", nil)
 
 	userApiServer.Router().ServeHTTP(recorder, request)
 
@@ -32,7 +32,7 @@ func TestUserSearchHandler_Success(t *testing.T) {
 
 func TestUserSearchHandler_InvalidPageNumber(t *testing.T) {
 	recorder := httptest.NewRecorder()
-	request, _ := http.NewRequest(http.MethodGet, "/users?search=Test&page=invalid&size=10", nil)
+	request, _ := http.NewRequest(http.MethodGet, "/v1/users?search=Test&page=invalid&size=10", nil)
 
 	userApiServer.Router().ServeHTTP(recorder, request)
 
@@ -41,7 +41,7 @@ func TestUserSearchHandler_InvalidPageNumber(t *testing.T) {
 
 func TestUserSearchHandler_InvalidPageSize(t *testing.T) {
 	recorder := httptest.NewRecorder()
-	request, _ := http.NewRequest(http.MethodGet, "/users?search=Test&page=1&size=invalid", nil)
+	request, _ := http.NewRequest(http.MethodGet, "/v1/users?search=Test&page=1&size=invalid", nil)
 
 	userApiServer.Router().ServeHTTP(recorder, request)
 
@@ -50,7 +50,7 @@ func TestUserSearchHandler_InvalidPageSize(t *testing.T) {
 
 func TestUserSearchHandler_EmptyPageNumberItsEqualsToDefaultWithoutErrors(t *testing.T) {
 	recorder := httptest.NewRecorder()
-	request, _ := http.NewRequest(http.MethodGet, "/users?search=Test&page=&size=1", nil)
+	request, _ := http.NewRequest(http.MethodGet, "/v1/users?search=Test&page=&size=1", nil)
 
 	userApiServer.Router().ServeHTTP(recorder, request)
 
@@ -59,7 +59,7 @@ func TestUserSearchHandler_EmptyPageNumberItsEqualsToDefaultWithoutErrors(t *tes
 
 func TestUserSearchHandler_EmptyPageSizeItsEqualsToDefaultWithoutErrors(t *testing.T) {
 	recorder := httptest.NewRecorder()
-	request, _ := http.NewRequest(http.MethodGet, "/users?search=Test&page=1&size=", nil)
+	request, _ := http.NewRequest(http.MethodGet, "/v1/users?search=Test&page=1&size=", nil)
 
 	userApiServer.Router().ServeHTTP(recorder, request)
 

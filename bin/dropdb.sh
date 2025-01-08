@@ -46,7 +46,7 @@ EOT
 #:[.'.]:> Tu lógica aquí
 #:[.'.]:>-------------------------------------
 log_info "¡Bienvenido al script más burlón de la Cultura DevSecOps!"
-docker exec markitos-golang-service-postgres psql -U admin -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'markitos-golang-service-access' AND pid <> pg_backend_pid();"
-docker exec markitos-golang-service-postgres dropdb -U admin markitos-golang-service-access
-docker exec markitos-golang-service-postgres psql -U admin -c "DROP USER IF EXISTS \"markitos-golang-service-access\";"
+docker exec markitos-golang-service-postgres-for-access psql -U admin -c "SELECT pg_terminate_backend(pg_stat_activity.pid) FROM pg_stat_activity WHERE pg_stat_activity.datname = 'markitos-golang-service-access' AND pid <> pg_backend_pid();"
+docker exec markitos-golang-service-postgres-for-access dropdb -U admin markitos-golang-service-access
+docker exec markitos-golang-service-postgres-for-access psql -U admin -c "DROP USER IF EXISTS \"markitos-golang-service-access\";"
 #:[.'.]:>-------------------------------------

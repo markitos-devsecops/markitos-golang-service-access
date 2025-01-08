@@ -32,12 +32,12 @@ func NewServer(address string, repository domain.UserRepository) *Server {
 
 func (s *Server) createRouter() *gin.Engine {
 	router := gin.Default()
-	router.POST("/users", s.userCreateHandler)
-	router.GET("/users/all", s.userListHandler)
-	router.GET("/users/:id", s.userOneHandler)
-	router.PUT("/users/:id", s.userUpdateHandler)
-	router.GET("/", s.userMotdHandler)
-	router.GET("/users", s.userSearchHandler)
+	router.POST("/v1/users", s.userCreateHandler)
+	router.GET("/v1/users/all", s.userListHandler)
+	router.GET("/v1/users/:id", s.userOneHandler)
+	router.PUT("/v1/users/:id", s.userUpdateHandler)
+	router.GET("/v1/", s.userMotdHandler)
+	router.GET("/v1/users", s.userSearchHandler)
 
 	return router
 }

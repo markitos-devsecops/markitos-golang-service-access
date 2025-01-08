@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d4b1fe9a-1f0e-4c1a-83c3-818bce714cc6",
+		"_postman_id": "d05f3fca-5f31-4347-9252-9b550588639d",
 		"name": "markitos-golang-service-access",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "40277391"
@@ -34,7 +34,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/users",
+							"raw": "http://localhost:3000/v1/users",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -53,7 +53,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/users/4f142ef5-f542-4a7b-8cd2-d8c46a07983d",
+							"raw": "http://localhost:3000/v1/users/4f142ef5-f542-4a7b-8cd2-d8c46a07983d",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -73,7 +73,7 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/users/4f142ef5-f542-4a7b-8cd2-d8c46a07983d",
+							"raw": "http://localhost:3000/v1/users/4f142ef5-f542-4a7b-8cd2-d8c46a07983d",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -102,7 +102,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/users",
+							"raw": "http://localhost:3000/v1/users",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -130,7 +130,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:3000/users/21b513c0-0c67-4977-9dfd-a3238065552c",
+							"raw": "http://localhost:3000/v1/users/21b513c0-0c67-4977-9dfd-a3238065552c",
 							"protocol": "http",
 							"host": [
 								"localhost"

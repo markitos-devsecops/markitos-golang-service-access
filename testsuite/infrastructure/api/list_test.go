@@ -21,7 +21,7 @@ func TestUserListHandler_Success(t *testing.T) {
 	repo.Create(user2)
 
 	recorder := httptest.NewRecorder()
-	request, _ := http.NewRequest(http.MethodGet, "/users/all", nil)
+	request, _ := http.NewRequest(http.MethodGet, "/v1/users/all", nil)
 
 	server.Router().ServeHTTP(recorder, request)
 

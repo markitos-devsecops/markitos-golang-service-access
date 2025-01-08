@@ -21,7 +21,7 @@ func TestUserUpdateHandler_Success(t *testing.T) {
 		"message": updatedMessage,
 	})
 	recorder := httptest.NewRecorder()
-	request, _ := http.NewRequest(http.MethodPut, "/users/"+user.Id, bytes.NewBuffer(requestBody))
+	request, _ := http.NewRequest(http.MethodPut, "/v1/users/"+user.Id, bytes.NewBuffer(requestBody))
 	request.Header.Set("Content-Type", "application/json")
 
 	userApiServer.Router().ServeHTTP(recorder, request)
@@ -39,7 +39,7 @@ func TestUserUpdateHandler_InvalidID(t *testing.T) {
 		"message": "Updated User",
 	})
 	recorder := httptest.NewRecorder()
-	request, _ := http.NewRequest(http.MethodPut, "/users/invalid-id", bytes.NewBuffer(requestBody))
+	request, _ := http.NewRequest(http.MethodPut, "/v1/users/invalid-id", bytes.NewBuffer(requestBody))
 	request.Header.Set("Content-Type", "application/json")
 
 	userApiServer.Router().ServeHTTP(recorder, request)
@@ -53,7 +53,7 @@ func TestUserUpdateHandler_MissingMessage(t *testing.T) {
 
 	requestBody, _ := json.Marshal(map[string]string{})
 	recorder := httptest.NewRecorder()
-	request, _ := http.NewRequest(http.MethodPut, "/users/"+user.Id, bytes.NewBuffer(requestBody))
+	request, _ := http.NewRequest(http.MethodPut, "/v1/users/"+user.Id, bytes.NewBuffer(requestBody))
 	request.Header.Set("Content-Type", "application/json")
 
 	userApiServer.Router().ServeHTTP(recorder, request)

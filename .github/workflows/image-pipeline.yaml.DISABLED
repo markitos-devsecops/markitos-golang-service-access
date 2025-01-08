@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-24.04
 
     # services:
-    #   markitos-golang-service-postgres:
+    #   markitos-golang-service-postgres-for-access:
     #     image: postgres:latest
     #     ports:
     #       - 5432:5432
@@ -20,8 +20,8 @@ jobs:
     #       --health-interval 10s
     #       --health-timeout 5s
     #       --health-retries 5
-    #       --name markitos-golang-service-postgres
-    #       --hostname markitos-golang-service-postgres
+    #       --name markitos-golang-service-postgres-for-access
+    #       --hostname markitos-golang-service-postgres-for-access
 
     steps:
     - name: Checkout repository

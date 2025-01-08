@@ -46,8 +46,8 @@ EOT
 #:[.'.]:> Tu lógica aquí
 #:[.'.]:>-------------------------------------
 log_info "¡Bienvenido al script más burlón de la Cultura DevSecOps!"
-docker exec markitos-golang-service-postgres createdb --username=admin --owner=admin markitos-golang-service-access || true
-docker exec markitos-golang-service-postgres psql -U admin -d markitos-golang-service-access -c "CREATE USER \"markitos-golang-service-access\" WITH PASSWORD 'markitos-golang-service-access';"
-docker exec markitos-golang-service-postgres psql -U admin -d markitos-golang-service-access -c "GRANT ALL PRIVILEGES ON DATABASE \"markitos-golang-service-access\" TO \"markitos-golang-service-access\";"
-docker exec markitos-golang-service-postgres psql -U admin -d markitos-golang-service-access -c "GRANT ALL PRIVILEGES ON SCHEMA public TO \"markitos-golang-service-access\";"
+docker exec markitos-golang-service-postgres-for-access createdb --username=admin --owner=admin markitos-golang-service-access || true
+docker exec markitos-golang-service-postgres-for-access psql -U admin -d markitos-golang-service-access -c "CREATE USER \"markitos-golang-service-access\" WITH PASSWORD 'markitos-golang-service-access';"
+docker exec markitos-golang-service-postgres-for-access psql -U admin -d markitos-golang-service-access -c "GRANT ALL PRIVILEGES ON DATABASE \"markitos-golang-service-access\" TO \"markitos-golang-service-access\";"
+docker exec markitos-golang-service-postgres-for-access psql -U admin -d markitos-golang-service-access -c "GRANT ALL PRIVILEGES ON SCHEMA public TO \"markitos-golang-service-access\";"
 #:[.'.]:>-------------------------------------

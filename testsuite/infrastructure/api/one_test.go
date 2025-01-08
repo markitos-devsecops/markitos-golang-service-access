@@ -16,7 +16,7 @@ func TestUserOneHandler_Success(t *testing.T) {
 	userRepository.Create(user)
 
 	recorder := httptest.NewRecorder()
-	request, _ := http.NewRequest(http.MethodGet, "/users/"+user.Id, nil)
+	request, _ := http.NewRequest(http.MethodGet, "/v1/users/"+user.Id, nil)
 
 	userApiServer.Router().ServeHTTP(recorder, request)
 
@@ -30,7 +30,7 @@ func TestUserOneHandler_Success(t *testing.T) {
 
 func TestUserOneHandler_NotFound(t *testing.T) {
 	recorder := httptest.NewRecorder()
-	request, _ := http.NewRequest(http.MethodGet, "/users/non-existent-id", nil)
+	request, _ := http.NewRequest(http.MethodGet, "/v1/users/non-existent-id", nil)
 
 	userApiServer.Router().ServeHTTP(recorder, request)
 
@@ -39,7 +39,7 @@ func TestUserOneHandler_NotFound(t *testing.T) {
 
 func TestUserOneHandler_InvalidID(t *testing.T) {
 	recorder := httptest.NewRecorder()
-	request, _ := http.NewRequest(http.MethodGet, "/users/invalid-id", nil)
+	request, _ := http.NewRequest(http.MethodGet, "/v1/users/invalid-id", nil)
 
 	userApiServer.Router().ServeHTTP(recorder, request)
 

@@ -17,7 +17,7 @@ func TestUserCreateHandler_Success(t *testing.T) {
 	requestBody, _ := json.Marshal(services.UserCreateRequest{
 		Message: "Test User",
 	})
-	request, _ := http.NewRequest(http.MethodPost, "/users", bytes.NewBuffer(requestBody))
+	request, _ := http.NewRequest(http.MethodPost, "/v1/users", bytes.NewBuffer(requestBody))
 	request.Header.Set("Content-Type", "application/json")
 
 	userApiServer.Router().ServeHTTP(recorder, request)
@@ -28,7 +28,7 @@ func TestUserCreateHandler_Success(t *testing.T) {
 func TestUserCreateHandler_MissingMessage(t *testing.T) {
 	recorder := httptest.NewRecorder()
 	requestBody, _ := json.Marshal(services.UserCreateRequest{})
-	request, _ := http.NewRequest(http.MethodPost, "/users", bytes.NewBuffer(requestBody))
+	request, _ := http.NewRequest(http.MethodPost, "/v1/users", bytes.NewBuffer(requestBody))
 	request.Header.Set("Content-Type", "application/json")
 
 	userApiServer.Router().ServeHTTP(recorder, request)

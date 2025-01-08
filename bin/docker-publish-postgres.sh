@@ -48,16 +48,16 @@ EOT
 log_info "¡Bienvenido al script más burlón de la Cultura DevSecOps!"
 echo "" && \
 echo "" && \
-echo "Building image markitos-golang-service-postgres:$(or $(TAG),1.0.0)" && \
-docker build --file Dockerfile.postgres -t ghcr.io/markitos-devsecops/markitos-golang-service-postgres:$(or $(TAG),1.0.0) . && \
+echo "Building image markitos-golang-service-postgres-for-access:$(or $(TAG),1.0.0)" && \
+docker build --file Dockerfile.postgres -t ghcr.io/markitos-devsecops/markitos-golang-service-postgres-for-access:$(or $(TAG),1.0.0) . && \
 echo "" && \
-echo "Pushing image markitos-golang-service-postgres:$(or $(TAG),1.0.0)" && \
-docker push ghcr.io/markitos-devsecops/markitos-golang-service-postgres:$(or $(TAG),1.0.0) && \
+echo "Pushing image markitos-golang-service-postgres-for-access:$(or $(TAG),1.0.0)" && \
+docker push ghcr.io/markitos-devsecops/markitos-golang-service-postgres-for-access:$(or $(TAG),1.0.0) && \
 echo "" && \
-echo "Image markitos-golang-service-postgres:$(or $(TAG),1.0.0) pushed" && \
-docker image rm --force ghcr.io/markitos-devsecops/markitos-golang-service-postgres:$(or $(TAG),1.0.0)
+echo "Image markitos-golang-service-postgres-for-access:$(or $(TAG),1.0.0) pushed" && \
+docker image rm --force ghcr.io/markitos-devsecops/markitos-golang-service-postgres-for-access:$(or $(TAG),1.0.0)
 echo "" && \
-echo "Image markitos-golang-service-postgres:$(or $(TAG),1.0.0) removed"
+echo "Image markitos-golang-service-postgres-for-access:$(or $(TAG),1.0.0) removed"
 echo "" && \
 echo "Done!"
 #:[.'.]:>-------------------------------------
