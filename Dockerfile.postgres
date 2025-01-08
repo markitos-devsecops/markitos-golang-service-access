@@ -1,0 +1,12 @@
+FROM postgres:latest
+
+ENV POSTGRES_USER=admin
+ENV POSTGRES_PASSWORD=admin
+ENV POSTGRES_DB=markitos-golang-service-access
+
+EXPOSE 5432
+
+# Copy initialization scripts if any
+# COPY ./init.sql /docker-entrypoint-initdb.d/
+
+CMD ["postgres"]

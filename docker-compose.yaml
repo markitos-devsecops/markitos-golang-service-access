@@ -1,0 +1,19 @@
+services:
+  markitos-golang-service-postgres:
+    image: postgres:latest
+    container_name: markitos-golang-service-postgres
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+    ports:
+      - "5432:5432"
+    networks:
+      markitos-network:
+        ipv4_address: 172.20.0.3
+
+networks:
+  markitos-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
