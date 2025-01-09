@@ -3,6 +3,7 @@ package domain
 import (
 	"net/mail"
 	"regexp"
+	"strings"
 )
 
 type UserId struct {
@@ -30,9 +31,18 @@ type UserName struct {
 }
 
 func NewUserName(value string) (*UserName, error) {
-	if value == "" {
+	value = strings.TrimSpace(value)
+	value = regexp.MustCompile(`\s+`).ReplaceAllString(value, " ")
+
+	if len(value) < 3 || len(value) > 50 {
 		return nil, NewUserInvalidNameError(value)
 	}
+
+	regex := regexp.MustCompile(`^[a-zA-Z][a-zA-Z\s]*[a-zA-Z]$`)
+	if !regex.MatchString(value) {
+		return nil, NewUserInvalidNameFormatError(value)
+	}
+
 	return &UserName{value: value}, nil
 }
 

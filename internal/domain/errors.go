@@ -34,7 +34,7 @@ func (e *UserInvalidIdFormatError) Error() string {
 }
 
 // --------------------------------------------------------------
-const USER_INVALID_NAME = "invalid name"
+const USER_INVALID_NAME = "the name must be between 3 and 50 characters long"
 
 type UserInvalidNameError struct {
 	name string
@@ -46,6 +46,20 @@ func NewUserInvalidNameError(name string) error {
 
 func (e *UserInvalidNameError) Error() string {
 	return fmt.Sprintf("%s: %s", USER_INVALID_NAME, e.name)
+}
+
+const USER_INVALID_NAME_FORMAT = "the name can only contain letters and spaces and must start and end with a letter"
+
+type UserInvalidNameFormatError struct {
+	email string
+}
+
+func NewUserInvalidNameFormatError(email string) error {
+	return &UserInvalidNameFormatError{email: email}
+}
+
+func (e *UserInvalidNameFormatError) Error() string {
+	return fmt.Sprintf("%s: %s", USER_INVALID_EMAIL_FORMAT, e.email)
 }
 
 // --------------------------------------------------------------
