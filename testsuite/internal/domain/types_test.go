@@ -91,7 +91,7 @@ func TestCreateUserIdWithEmptyValue(t *testing.T) {
 }
 
 func TestCreateUserIdWithInvalidFormat(t *testing.T) {
-	invalidUUID := "not-a-valid-uuid"
+	invalidUUID := "550e8400-e29b-41d?-a716-446655440000"
 	userId, err := domain.NewUserId(invalidUUID)
 
 	var invalidFormatErr *domain.UserInvalidIdFormatError
@@ -172,10 +172,10 @@ func TestUserPassword_InvalidFormat(t *testing.T) {
 	tests := []struct {
 		password string
 	}{
-		{"invalidpassword"},       // No contiene mayúscula, número ni carácter especial
-		{"NoNumberOrSpecialChar"}, // No contiene número ni carácter especial
-		{"NoSpecialChar12345"},    // No contiene carácter especial
-		{"1234567@"},              // No contiene mayúscula
+		{"invalidpasswordnoupper"},
+		{"NoNumberOrSpecialChar"},
+		{"NoSpecialChar12345"},
+		{"1234567@noupper"},
 	}
 
 	for _, tt := range tests {
