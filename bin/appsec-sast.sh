@@ -46,7 +46,5 @@ EOT
 #:[.'.]:> Tu lógica aquí
 #:[.'.]:>-------------------------------------
 log_info "¡Bienvenido al script más burlón de la Cultura DevSecOps!"
-@if [ -f .semgrepignore ]; then mv .semgrepignore .semgrepignore.bak; fi
-docker run --rm -v $(shell pwd):/src returntocorp/semgrep semgrep scan --config=auto /src --verbose
-@if [ -f .semgrepignore.bak ]; then mv .semgrepignore.bak .semgrepignore; fi
+docker run --rm -v $(pwd):/src returntocorp/semgrep semgrep scan --config=auto /src --verbose
 #:[.'.]:>-------------------------------------
