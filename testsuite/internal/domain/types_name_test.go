@@ -20,7 +20,7 @@ func TestCreateUserNameWithEmptyValue(t *testing.T) {
 }
 
 func TestCreateUserNameWithTooShortValue(t *testing.T) {
-	userName, err := domain.NewUserName("Jo")
+	userName, err := domain.NewUserName("Ma")
 
 	var invalidNameErr *domain.UserInvalidNameError
 	require.True(t, errors.As(err, &invalidNameErr))
@@ -39,7 +39,7 @@ func TestCreateUserNameWithTooLongValue(t *testing.T) {
 }
 
 func TestCreateUserNameWithInvalidCharacters(t *testing.T) {
-	invalidName := "John_Doe!"
+	invalidName := "Markitos_Doe!"
 	userName, err := domain.NewUserName(invalidName)
 
 	var formatError *domain.UserInvalidNameFormatError
@@ -49,8 +49,8 @@ func TestCreateUserNameWithInvalidCharacters(t *testing.T) {
 }
 
 func TestCreateUserNameWithMultipleSpaces(t *testing.T) {
-	validName := "John     Doe"
-	expectedName := "John Doe"
+	validName := "Markitos     Doe"
+	expectedName := "Markitos Doe"
 	userName, err := domain.NewUserName(validName)
 
 	require.NoError(t, err)
@@ -59,7 +59,7 @@ func TestCreateUserNameWithMultipleSpaces(t *testing.T) {
 }
 
 func TestCreateUserNameWithValidValue(t *testing.T) {
-	validName := "John Doe"
+	validName := "Markitos Doe"
 	userName, err := domain.NewUserName(validName)
 
 	require.NoError(t, err)
