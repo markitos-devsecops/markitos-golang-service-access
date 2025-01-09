@@ -18,7 +18,7 @@ func TestUserCreate(t *testing.T) {
 	db := setupTestDB()
 	repository := database.NewUserPostgresRepository(db)
 
-	user, _ := domain.NewUser(domain.UUIDv4(), domain.PersonalName())
+	user, _ := domain.NewUser(domain.UUIDv4(), domain.PersonalName(), domain.RandomEmail(), domain.RandomPassword(10))
 	err := repository.Create(user)
 	require.NoError(t, err)
 
@@ -53,7 +53,7 @@ func TestUserDelete(t *testing.T) {
 	db := setupTestDB()
 	repository := database.NewUserPostgresRepository(db)
 
-	user, _ := domain.NewUser(domain.UUIDv4(), domain.PersonalName())
+	user, _ := domain.NewUser(domain.UUIDv4(), domain.PersonalName(), domain.RandomEmail(), domain.RandomPassword(10))
 	db.Create(user)
 
 	err := repository.Delete(&user.Id)
@@ -69,7 +69,7 @@ func TestUserUpdate(t *testing.T) {
 	db := setupTestDB()
 	repository := database.NewUserPostgresRepository(db)
 
-	user, _ := domain.NewUser(domain.UUIDv4(), domain.PersonalName())
+	user, _ := domain.NewUser(domain.UUIDv4(), domain.PersonalName(), domain.RandomEmail(), domain.RandomPassword(10))
 	db.Create(user)
 
 	user.Name = "Updated Name"
@@ -86,7 +86,7 @@ func TestUserOne(t *testing.T) {
 	db := setupTestDB()
 	repository := database.NewUserPostgresRepository(db)
 
-	user, _ := domain.NewUser(domain.UUIDv4(), domain.PersonalName())
+	user, _ := domain.NewUser(domain.UUIDv4(), domain.PersonalName(), domain.RandomEmail(), domain.RandomPassword(10))
 	db.Create(user)
 
 	result, err := repository.One(&user.Id)

@@ -9,11 +9,13 @@ import (
 	"markitos-golang-service-access/internal/domain"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestUserOneHandler_Success(t *testing.T) {
-	user := &domain.User{Id: domain.UUIDv4(), Name: "Test User"}
-	userRepository.Create(user)
+	user, _ := domain.NewUser(domain.UUIDv4(), domain.PersonalName(), domain.RandomEmail(), domain.RandomPassword(10))
+	err := userRepository.Create(user)
+	require.NoError(t, err)
 
 	recorder := httptest.NewRecorder()
 	request, _ := http.NewRequest(http.MethodGet, "/v1/users/"+user.Id, nil)
@@ -22,7 +24,7 @@ func TestUserOneHandler_Success(t *testing.T) {
 
 	assert.Equal(t, http.StatusOK, recorder.Code)
 	var response domain.User
-	err := json.Unmarshal(recorder.Body.Bytes(), &response)
+	err = json.Unmarshal(recorder.Body.Bytes(), &response)
 	assert.NoError(t, err)
 	assert.Equal(t, user.Id, response.Id)
 	assert.Equal(t, user.Name, response.Name)

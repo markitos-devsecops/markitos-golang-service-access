@@ -10,9 +10,12 @@ import (
 )
 
 func TestCanUpdateAUser(t *testing.T) {
-	createdUser, err := userCreateService.Execute(services.UserCreateRequest{
-		Name: VALID_NAME,
-	})
+	var request services.UserCreateRequest = services.UserCreateRequest{
+		Name:     VALID_NAME,
+		Email:    VALID_EMAIL,
+		Password: domain.RandomPassword(10),
+	}
+	createdUser, err := userCreateService.Execute(request)
 	require.NoError(t, err)
 
 	model, err := userUpdateService.Execute(services.UserUpdateRequest{

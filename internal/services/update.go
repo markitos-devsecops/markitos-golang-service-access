@@ -34,17 +34,22 @@ func NewUserUpdateService(repository domain.UserRepository) UserUpdateService {
 }
 
 func (s *UserUpdateService) Execute(request UserUpdateRequest) (*domain.User, error) {
-	securedUser, err := domain.NewUser(request.Id, request.Name)
+	securedId, err := domain.NewUserId(request.Id)
+	if err != nil {
+		return nil, err
+	}
+	securedName, err := domain.NewUserName(request.Name)
 	if err != nil {
 		return nil, err
 	}
 
-	userToUpdate, errExistingUser := s.Repository.One(&securedUser.Id)
+	var id string = securedId.Value()
+	userToUpdate, errExistingUser := s.Repository.One(&id)
 	if errExistingUser != nil {
 		return nil, errExistingUser
 	}
 
-	userToUpdate.Name = securedUser.Name
+	userToUpdate.Name = securedName.Value()
 	userToUpdate.UpdatedAt = time.Now()
 	err = s.Repository.Update(userToUpdate)
 	if err != nil {

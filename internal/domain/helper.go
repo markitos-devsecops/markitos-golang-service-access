@@ -2,6 +2,7 @@ package domain
 
 import (
 	"crypto/rand"
+	"errors"
 	"fmt"
 	"math/big"
 	"regexp"
@@ -91,4 +92,80 @@ func Slug() string {
 	}
 
 	return strings.Join(result, "-")
+}
+
+func RandomPassword(length int) string {
+	if length < 6 {
+		length = 10
+	}
+
+	const (
+		lowercaseChars = "abcdefghijklmnopqrstuvwxyz"
+		uppercaseChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+		numericChars   = "0123456789"
+		specialChars   = "!@#$%^&*(),.?\":{}|<>"
+	)
+
+	randomUppercase, err := getRandomCharacter(uppercaseChars)
+	if err != nil {
+		return "abc123..ABC"
+	}
+
+	randomNumber, err := getRandomCharacter(numericChars)
+	if err != nil {
+		return "abc123..DEF"
+	}
+
+	randomSpecialChar, err := getRandomCharacter(specialChars)
+	if err != nil {
+		return "abc123..GHI"
+
+	}
+
+	remainingLength := length - 3
+
+	remainingChars := lowercaseChars + uppercaseChars + numericChars
+	var passwordBuilder strings.Builder
+	for i := 0; i < remainingLength; i++ {
+		char, err := getRandomCharacter(remainingChars)
+		if err != nil {
+			return "abc123..JKL"
+		}
+		passwordBuilder.WriteString(char)
+	}
+
+	password := randomUppercase + randomNumber + randomSpecialChar + passwordBuilder.String()
+
+	return shuffleString(password)
+}
+
+func getRandomCharacter(chars string) (string, error) {
+	index, err := cryptoRandInt(len(chars))
+	if err != nil {
+		return "", err
+	}
+	return string(chars[index]), nil
+}
+
+func cryptoRandInt(max int) (int, error) {
+	if max <= 0 {
+		return 0, errors.New("max must be greater than 0")
+	}
+
+	bytes := make([]byte, 1)
+	_, err := rand.Read(bytes)
+	if err != nil {
+		return 0, err
+	}
+
+	return int(bytes[0]) % max, nil
+}
+
+func shuffleString(s string) string {
+	runes := []rune(s)
+	for i := len(runes) - 1; i > 0; i-- {
+		j, _ := cryptoRandInt(i + 1)
+		runes[i], runes[j] = runes[j], runes[i]
+	}
+	return string(runes)
 }

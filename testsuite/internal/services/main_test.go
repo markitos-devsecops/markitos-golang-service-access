@@ -9,6 +9,7 @@ import (
 
 const VALID_UUIDV4 = "f47ac10b-58cc-4372-a567-0e02b2c3d479"
 const VALID_NAME = "any valid name"
+const VALID_EMAIL = "email@email.com"
 
 var userMockSpyRepository domain.UserRepository
 var userCreateService services.UserCreateService

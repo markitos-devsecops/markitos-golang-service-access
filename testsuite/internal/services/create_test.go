@@ -11,7 +11,9 @@ import (
 
 func TestCanCreateAUser(t *testing.T) {
 	var request services.UserCreateRequest = services.UserCreateRequest{
-		Name: VALID_NAME,
+		Name:     VALID_NAME,
+		Email:    VALID_EMAIL,
+		Password: domain.RandomPassword(10),
 	}
 	response, err := userCreateService.Execute(request)
 
@@ -23,9 +25,10 @@ func TestCanCreateAUser(t *testing.T) {
 
 func TestCantCreateAUserWithEmptyName(t *testing.T) {
 	var request services.UserCreateRequest = services.UserCreateRequest{
-		Name: "",
+		Name:     "",
+		Email:    VALID_EMAIL,
+		Password: domain.RandomPassword(10),
 	}
-
 	response, err := userCreateService.Execute(request)
 	require.Nil(t, response)
 	require.Error(t, err)

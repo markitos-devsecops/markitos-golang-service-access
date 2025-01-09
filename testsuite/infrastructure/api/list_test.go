@@ -15,8 +15,8 @@ func TestUserListHandler_Success(t *testing.T) {
 	server := setupTestServer()
 	repo := server.Repository().(*domain.UserInMemoryRepository)
 
-	user1 := &domain.User{Id: domain.UUIDv4(), Name: "Test User 1"}
-	user2 := &domain.User{Id: domain.UUIDv4(), Name: "Test User 2"}
+	user1 := &domain.User{Id: domain.UUIDv4(), Name: "Test User 1", Email: domain.RandomEmail(), Password: domain.RandomPassword(10)}
+	user2 := &domain.User{Id: domain.UUIDv4(), Name: "Test User 2", Email: domain.RandomEmail(), Password: domain.RandomPassword(10)}
 	repo.Create(user1)
 	repo.Create(user2)
 

@@ -5,7 +5,9 @@ import (
 )
 
 type UserCreateRequest struct {
-	Name string `json:"name" binding:"required"`
+	Name     string `json:"name" binding:"required"`
+	Email    string `json:"email" binding:"required,email"`
+	Password string `json:"password" binding:"required"`
 }
 
 func NewBolilerCreateRequest(name string) UserCreateRequest {
@@ -21,7 +23,8 @@ func NewUserCreateService(repository domain.UserRepository) UserCreateService {
 }
 
 func (s *UserCreateService) Execute(request UserCreateRequest) (*domain.User, error) {
-	user, err := domain.NewUser(domain.UUIDv4(), request.Name)
+	var hashedPassword string = request.Password
+	user, err := domain.NewUser(domain.UUIDv4(), request.Name, request.Email, hashedPassword)
 	if err != nil {
 		return nil, err
 	}

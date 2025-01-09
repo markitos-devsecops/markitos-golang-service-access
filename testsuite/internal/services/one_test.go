@@ -11,7 +11,9 @@ import (
 
 func TestCanGetAUser(t *testing.T) {
 	response, _ := userCreateService.Execute(services.UserCreateRequest{
-		Name: VALID_NAME,
+		Name:     VALID_NAME,
+		Email:    VALID_EMAIL,
+		Password: domain.RandomPassword(10),
 	})
 	require.True(t, domain.IsUUIDv4(response.Id))
 
