@@ -135,3 +135,19 @@ func NewEmptyInputError(tag string) error {
 func (e *EmptyInputError) Error() string {
 	return fmt.Sprintf("%s: %s", ERROR_EMPTY_INPUT, e.tag)
 }
+
+// --------------------------------------------------------------
+
+const ERROR_UNEXPECTED_RESULT = "unexpected result"
+
+type UnexpectedResultError struct {
+	tag string
+}
+
+func NewUnexpectedResultError(tag string) error {
+	return &UnexpectedResultError{tag}
+}
+
+func (e *UnexpectedResultError) Error() string {
+	return fmt.Sprintf("%s: %s", ERROR_UNEXPECTED_RESULT, e.tag)
+}
