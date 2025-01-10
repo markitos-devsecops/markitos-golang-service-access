@@ -119,3 +119,19 @@ func NewUserInvalidPasswordFormatError(password string) error {
 func (e *UserInvalidPasswordFormatError) Error() string {
 	return fmt.Sprintf("%s: %s", USER_INVALID_PASSWORD_FORMAT, e.password)
 }
+
+// --------------------------------------------------------------
+
+const ERROR_EMPTY_INPUT = "cant pass an empty value"
+
+type EmptyInputError struct {
+	tag string
+}
+
+func NewEmptyInputError(tag string) error {
+	return &EmptyInputError{tag}
+}
+
+func (e *EmptyInputError) Error() string {
+	return fmt.Sprintf("%s: %s", ERROR_EMPTY_INPUT, e.tag)
+}
