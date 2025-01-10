@@ -16,7 +16,7 @@ import (
 func TestUserCreateHandler_Success(t *testing.T) {
 	recorder := httptest.NewRecorder()
 	requestBody, _ := json.Marshal(services.UserCreateRequest{
-		Name:     domain.PersonalName(),
+		Name:     domain.RandomPersonName(),
 		Email:    domain.RandomEmail(),
 		Password: domain.RandomPassword(10),
 	})

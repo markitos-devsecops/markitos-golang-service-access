@@ -13,7 +13,7 @@ import (
 )
 
 func TestUserOneHandler_Success(t *testing.T) {
-	user, _ := domain.NewUser(domain.UUIDv4(), domain.PersonalName(), domain.RandomEmail(), domain.RandomPassword(10))
+	user, _ := domain.NewUser(domain.UUIDv4(), domain.RandomPersonName(), domain.RandomEmail(), domain.RandomPassword(10))
 	err := userRepository.Create(user)
 	require.NoError(t, err)
 

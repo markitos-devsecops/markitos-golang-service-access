@@ -61,9 +61,9 @@ func TestCanValidateUUIDv4(t *testing.T) {
 	}
 }
 
-func TestCanCreateValidPersonalName(t *testing.T) {
+func TestCanCreateValidRandomPersonName(t *testing.T) {
 	validLengths := []int{3, 150}
-	name := domain.PersonalName()
+	name := domain.RandomPersonName()
 	words := strings.Fields(name)
 
 	require.NotEmpty(t, name)

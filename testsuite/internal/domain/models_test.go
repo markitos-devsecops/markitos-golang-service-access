@@ -10,7 +10,7 @@ import (
 )
 
 func TestCreateUserWithEmptyId(t *testing.T) {
-	user, err := domain.NewUser("", domain.PersonalName(), domain.RandomEmail(), domain.RandomPassword(10))
+	user, err := domain.NewUser("", domain.RandomPersonName(), domain.RandomEmail(), domain.RandomPassword(10))
 
 	var invalidIdErr *domain.UserInvalidIdError
 	require.True(t, errors.As(err, &invalidIdErr))
