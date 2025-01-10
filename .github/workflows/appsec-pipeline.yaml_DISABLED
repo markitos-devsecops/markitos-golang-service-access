@@ -1,4 +1,4 @@
-name: Database Pipeline
+name: AppSec Pipeline
 
 on: [push, pull_request]
 
@@ -53,6 +53,7 @@ jobs:
 
     - name: Create database
       run: |
+        cp production.app.env app.env
         make createdb
 
     - name: Run tests
