@@ -18,7 +18,7 @@ func NewHasherBCrypt() HasherBCrypt {
 	return HasherBCrypt{}
 }
 
-func (h *HasherBCrypt) Create(content string) (string, error) {
+func (h HasherBCrypt) Create(content string) (string, error) {
 	if len(content) == 0 {
 		return "", domain.NewEmptyInputError(HASHER_BCRYPT_TAG_FOR_EMPTY_ERROR)
 	}
@@ -29,6 +29,6 @@ func (h *HasherBCrypt) Create(content string) (string, error) {
 
 	return string(hashed), nil
 }
-func (h *HasherBCrypt) Validate(hashedContent, rawContent string) bool {
+func (h HasherBCrypt) Validate(hashedContent, rawContent string) bool {
 	return bcrypt.CompareHashAndPassword([]byte(hashedContent), []byte(rawContent)) == nil
 }

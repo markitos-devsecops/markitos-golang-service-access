@@ -1,6 +1,6 @@
-package domain
+package libs
 
 type Hasher interface {
 	Create(content string) (string, error)
-	Validate(content string) error
+	Validate(hashedContent, rawContent string) bool
 }
