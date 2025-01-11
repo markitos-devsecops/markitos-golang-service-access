@@ -70,7 +70,7 @@ func (t TokenerJWT) Validate(tokenInput string) (*libs.Payload, error) {
 	}
 
 	if err := payload.Valid(); err != nil {
-		return nil, domain.NewTokenerValidationError("invalid token, payload validation")
+		return nil, domain.NewTokenerValidationError(err.Error())
 	}
 
 	return payload, nil
