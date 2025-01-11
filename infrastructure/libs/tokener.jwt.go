@@ -1,6 +1,7 @@
 package libs
 
 import (
+	"errors"
 	"markitos-golang-service-access/internal/domain"
 	"markitos-golang-service-access/internal/domain/libs"
 	"time"
@@ -56,12 +57,15 @@ func (t TokenerJWT) Validate(tokenInput string) (*libs.Payload, error) {
 		return []byte(t.secretKey), nil
 	})
 	if err != nil {
-		return nil, domain.NewTokenerValidationError("ivalid token")
+		if errors.Is(err, jwt.ErrTokenExpired) {
+			return nil, domain.NewTokenerExpiredError()
+		}
+		return nil, domain.NewTokenerValidationError("ivalid token " + err.Error())
 	}
 
 	claims, ok := parsedToken.Claims.(jwt.MapClaims)
 	if !ok || !parsedToken.Valid {
-		return nil, domain.NewTokenerValidationError("invalid token")
+		return nil, domain.NewTokenerValidationError("invalid token2")
 	}
 
 	payload, err := libs.NewPayloadFromToken(claims)
@@ -70,7 +74,7 @@ func (t TokenerJWT) Validate(tokenInput string) (*libs.Payload, error) {
 	}
 
 	if err := payload.Valid(); err != nil {
-		return nil, domain.NewTokenerValidationError(err.Error())
+		return nil, err
 	}
 
 	return payload, nil

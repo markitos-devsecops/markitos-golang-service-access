@@ -195,3 +195,16 @@ func NewTokenerValidationError(reason string) error {
 func (e *TokenerValidationError) Error() string {
 	return fmt.Sprintf(ERROR_TOKENER_VALIDATION, e.reason)
 }
+
+const ERROR_TOKENER_EXPIRED = "token have been expired"
+
+type TokenerExpiredError struct {
+}
+
+func NewTokenerExpiredError() error {
+	return &TokenerExpiredError{}
+}
+
+func (e *TokenerExpiredError) Error() string {
+	return ERROR_TOKENER_VALIDATION
+}

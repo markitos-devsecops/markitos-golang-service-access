@@ -58,7 +58,7 @@ func NewPayloadFromToken(parsedToken map[string]interface{}) (*Payload, error) {
 
 func (p *Payload) Valid() error {
 	if time.Now().After(p.ExpiredAt) {
-		return domain.NewTokenerValidationError(fmt.Sprintf("token have been expired at %v", p.ExpiredAt))
+		return domain.NewTokenerExpiredError()
 	}
 
 	return nil

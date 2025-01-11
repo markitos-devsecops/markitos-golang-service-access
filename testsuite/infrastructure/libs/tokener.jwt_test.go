@@ -2,6 +2,7 @@ package libs_test
 
 import (
 	"errors"
+	"fmt"
 	"markitos-golang-service-access/infrastructure/libs"
 	"markitos-golang-service-access/internal/domain"
 	"strings"
@@ -37,7 +38,6 @@ func TestCanCreateAValidJWTToken(t *testing.T) {
 	require.WithinDuration(t, expireAt, validatedPayload.ExpiredAt, time.Second)
 }
 
-// TODO: expired custom error
 func TestExpiredToken(t *testing.T) {
 	var masterTokenValue string = domain.UUIDv4()
 	var duration time.Duration = -time.Minute
@@ -48,8 +48,9 @@ func TestExpiredToken(t *testing.T) {
 	require.NotEmpty(t, token)
 
 	_, err = tokener.Validate(token)
+	fmt.Println("Error: ", err)
 	require.Error(t, err)
-	var tokenerValidationError *domain.TokenerValidationError
+	var tokenerValidationError *domain.TokenerExpiredError
 	require.True(t, errors.As(err, &tokenerValidationError))
 }
 
