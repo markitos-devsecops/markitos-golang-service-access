@@ -1,5 +1,6 @@
 package database
 
+// TODO: only return domain errors
 import (
 	"fmt"
 	"markitos-golang-service-access/internal/domain"
@@ -32,6 +33,7 @@ func (r *UserPostgresRepository) One(id *string) (*domain.User, error) {
 	if err := r.db.First(&user, "id = ?", *id).Error; err != nil {
 		return nil, err
 	}
+
 	return &user, nil
 }
 
@@ -40,6 +42,7 @@ func (r *UserPostgresRepository) List() ([]*domain.User, error) {
 	if err := r.db.Find(&users).Error; err != nil {
 		return nil, err
 	}
+
 	return users, nil
 }
 
@@ -51,7 +54,9 @@ func (r *UserPostgresRepository) SearchAndPaginate(searchTerm string, pageNumber
 		Limit(pageSize).
 		Offset(offset).
 		Find(&users).Error; err != nil {
+
 		return nil, err
 	}
+
 	return users, nil
 }
