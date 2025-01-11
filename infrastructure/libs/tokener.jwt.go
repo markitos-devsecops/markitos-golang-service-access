@@ -36,9 +36,9 @@ func (t TokenerJWT) Create(masterValue string, expireAt time.Duration) (string, 
 	payload := libs.NewPayload(masterValue, expireAt)
 
 	claims := jwt.MapClaims{
-		"iss": payload.MasterValue,
-		"iat": payload.IssueddAt.Unix(),
-		"exp": payload.ExpiredAt.Unix(),
+		libs.TOKENER_MASTER_VALUE_JWT_KEY: payload.MasterValue,
+		libs.TOKENER_ISSUED_AT_JWT_KEY:    payload.IssueddAt.Unix(),
+		libs.TOKENER_EXPIRED_AT_JWT_KEY:   payload.ExpiredAt.Unix(),
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
