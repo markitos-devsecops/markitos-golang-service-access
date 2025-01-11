@@ -2,6 +2,7 @@ package libs
 
 import (
 	"fmt"
+	"markitos-golang-service-access/internal/domain"
 	"time"
 )
 
@@ -33,19 +34,19 @@ func NewPayload(masterValye string, duration time.Duration) *Payload {
 func NewPayloadFromToken(parsedToken map[string]interface{}) (*Payload, error) {
 	expUnix, ok := parsedToken[TOKENER_EXPIRED_AT_JWT_KEY].(float64)
 	if !ok {
-		return nil, fmt.Errorf("error: campo %s no encontrado o con tipo incorrecto", TOKENER_EXPIRED_AT_JWT_KEY)
+		return nil, domain.NewTokenerValidationError(fmt.Sprintf("error, field %s not found or with incorrect type", TOKENER_EXPIRED_AT_JWT_KEY))
 	}
 	expiredAt := time.Unix(int64(expUnix), 0)
 
 	iatUnix, ok := parsedToken[TOKENER_ISSUED_AT_JWT_KEY].(float64)
 	if !ok {
-		return nil, fmt.Errorf("error: campo %s no encontrado o con tipo incorrecto", TOKENER_ISSUED_AT_JWT_KEY)
+		return nil, domain.NewTokenerValidationError(fmt.Sprintf("error, field %s not found or with incorrect type", TOKENER_ISSUED_AT_JWT_KEY))
 	}
 	issuedAt := time.Unix(int64(iatUnix), 0)
 
 	masterValue, ok := parsedToken[TOKENER_MASTER_VALUE_JWT_KEY].(string)
 	if !ok {
-		return nil, fmt.Errorf("error: campo %s no encontrado o con tipo incorrecto", TOKENER_MASTER_VALUE_JWT_KEY)
+		return nil, domain.NewTokenerValidationError(fmt.Sprintf("error, field %s not found or with incorrect type", TOKENER_MASTER_VALUE_JWT_KEY))
 	}
 
 	return &Payload{

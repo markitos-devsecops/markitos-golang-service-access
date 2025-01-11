@@ -24,13 +24,13 @@ run:
 #:[.''.]:><testing>
 test-cache-clear:
 	bash bin/test-cache-clear.sh
-test:
+test: test-cache-clear
 	bash bin/test.sh
-testv:
+testv: test-cache-clear
 	bash bin/testv.sh
-testc:
+testc: test-cache-clear
 	bash bin/testc.sh
-testcv:
+testcv: test-cache-clear
 	bash bin/testcv.sh
 #:[.''.]:>-------------------------------------------
 
