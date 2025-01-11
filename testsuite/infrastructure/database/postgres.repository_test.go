@@ -53,14 +53,15 @@ func TestUserDelete(t *testing.T) {
 	db := setupTestDB()
 	repository := database.NewUserPostgresRepository(db)
 
-	user, _ := domain.NewUser(domain.UUIDv4(), domain.RandomPersonName(), domain.RandomEmail(), domain.RandomPassword(10))
+	id := domain.UUIDv4()
+	user, _ := domain.NewUser(id, domain.RandomPersonName(), domain.RandomEmail(), domain.RandomPassword(10))
 	db.Create(user)
 
 	err := repository.Delete(&user.Id)
 	require.NoError(t, err)
 
 	var result domain.User
-	err = db.First(&result, "id = ?", user.Id).Error
+	err = db.First(&result, "id = ?", id).Error
 	require.Error(t, err)
 	assert.Equal(t, gorm.ErrRecordNotFound, err)
 }

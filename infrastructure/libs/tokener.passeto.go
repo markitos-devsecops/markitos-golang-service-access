@@ -1,7 +1,6 @@
 package libs
 
 import (
-	"fmt"
 	"markitos-golang-service-access/internal/domain"
 	"markitos-golang-service-access/internal/domain/libs"
 	"time"
@@ -20,7 +19,6 @@ const (
 
 func NewTokenerPasseto(secretKey string) (libs.Tokener, error) {
 	if len(secretKey) != TOKENER_PASSETO_CHACHA20POLY_KEYSIZE {
-		fmt.Println("Error1111: ", domain.NewTokenerInvalidKeyLengthError(), len(secretKey))
 		return nil, domain.NewTokenerInvalidKeyLengthError()
 	}
 
@@ -50,6 +48,10 @@ func (t TokenerPasseto) Validate(tokenInput string) (*libs.Payload, error) {
 	err := t.paseto.Decrypt(tokenInput, t.secretKey, payload, nil)
 	if err != nil {
 		return nil, domain.NewTokenerValidationError("invalid token " + err.Error())
+	}
+
+	if err := payload.Valid(); err != nil {
+		return nil, err
 	}
 
 	return payload, nil
