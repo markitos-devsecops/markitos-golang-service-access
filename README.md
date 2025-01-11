@@ -193,4 +193,4 @@ This project is licensed under the MIT License. See the `LICENSE` file for more 
 ---
 
 **Author**: Marco Antonio Rubio Lopez - mArkit0s  
-**Slogan**: Cultura DevSecOps
+**Contact**: Cultura DevSecOps - markitos.es.info@gmail.com
