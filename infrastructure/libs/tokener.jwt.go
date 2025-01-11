@@ -2,6 +2,7 @@ package libs
 
 import (
 	"errors"
+	"fmt"
 	"markitos-golang-service-access/internal/domain"
 	"markitos-golang-service-access/internal/domain/libs"
 	"time"
@@ -14,19 +15,18 @@ type TokenerJWT struct {
 }
 
 const (
-	TOKENER_JWT_TAG_FOR_EMPTY_ERROR = "bcrypt-empty"
-	//TODO: make a constructor but dont use tag, use reason
-	TOKENER_JWT_TAG_FOR_UNEXPECTED_ERROR  = "bcrypt-unexpected"
 	TOKENER_JWT_SIMETRIC_KEY_EXACT_LENGTH = 32
 )
 
-func NewTokenerJWT(secretKey string) libs.Tokener {
+func NewTokenerJWT(secretKey string) (libs.Tokener, error) {
 	if len(secretKey) != TOKENER_JWT_SIMETRIC_KEY_EXACT_LENGTH {
-
+		fmt.Println("Error1111: ", domain.NewTokenerInvalidKeyLengthError(), len(secretKey))
+		return nil, domain.NewTokenerInvalidKeyLengthError()
 	}
+
 	return TokenerJWT{
 		secretKey: secretKey,
-	}
+	}, nil
 }
 
 func (t TokenerJWT) Create(masterValue string, expireAt time.Duration) (string, error) {
