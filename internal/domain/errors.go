@@ -151,3 +151,47 @@ func NewUnexpectedResultError(tag string) error {
 func (e *UnexpectedResultError) Error() string {
 	return fmt.Sprintf("%s: %s", ERROR_UNEXPECTED_RESULT, e.tag)
 }
+
+// --------------------------------------------------------------
+
+const ERROR_TOKENER_INVALID_KEY_SIZE = "secret key must contain exactly 32 chars"
+
+type TokenerInvalidKeyLengthError struct {
+}
+
+func NewTokenerInvalidKeyLengthError() error {
+	return &TokenerInvalidKeyLengthError{}
+}
+
+func (e *TokenerInvalidKeyLengthError) Error() string {
+	return fmt.Sprint(ERROR_TOKENER_INVALID_KEY_SIZE)
+}
+
+const ERROR_TOKENER_CREATION = "cant create a new token"
+
+type TokenerCreationError struct {
+}
+
+func NewTokenerCreationError() error {
+	return &TokenerCreationError{}
+}
+
+func (e *TokenerCreationError) Error() string {
+	return fmt.Sprint(ERROR_TOKENER_CREATION)
+}
+
+const ERROR_TOKENER_VALIDATION = "cant validate token, reason: %s"
+
+type TokenerValidationError struct {
+	reason string
+}
+
+func NewTokenerValidationError(reason string) error {
+	return &TokenerValidationError{
+		reason: reason,
+	}
+}
+
+func (e *TokenerValidationError) Error() string {
+	return fmt.Sprintf(ERROR_TOKENER_VALIDATION, e.reason)
+}
