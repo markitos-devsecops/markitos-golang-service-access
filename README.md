@@ -1,5 +1,13 @@
 # 🚀 Markitos Golang Service Access
 
+## 🔮 Upcoming Features
+We are planning to add the following features in future releases:
+
+- **Login with Crypto Token (Paseto)**: Secure authentication using Paseto tokens.
+- **Auth Middleware**: Middleware for handling authentication and authorization.
+- **RBAC (Role-Based Access Control)**: Implementing role-based access control for fine-grained permissions management.
+
+
 ## 📖 Description
 This project provides a Golang service for accessing various resources. It is designed to be efficient, scalable, and easy to use.
 
