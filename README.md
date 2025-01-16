@@ -20,6 +20,7 @@ cd markitos-golang-service-access
 cp local.app.env app.env
 make docker-up
 make createdb
+make test
 ```
 
 ## 🚀 Usage

@@ -3,8 +3,9 @@ package configuration
 import "github.com/spf13/viper"
 
 type MarkitosGolangServiceAccessConfig struct {
-	DsnDatabase string `mapstructure:"APP_BBDD_DSN"`
-	AppAddress  string `mapstructure:"APP_ADDRESS"`
+	DsnDatabase  string `mapstructure:"APP_BBDD_DSN"`
+	AppAddress   string `mapstructure:"APP_ADDRESS"`
+	SymmetricKey string `mapstructure:"APP_SYMMETRIC_KEY"`
 }
 
 func LoadConfiguration(

@@ -56,7 +56,7 @@ func (s *Server) userOneHandler(ctx *gin.Context) {
 }
 
 func (s *Server) userUpdateHandler(ctx *gin.Context) {
-	request, shouldExitByError := createRequestOrExitWithError(ctx)
+	request, shouldExitByError := createUpdateRequestOrExitWithError(ctx)
 	if shouldExitByError {
 		return
 	}
@@ -69,6 +69,26 @@ func (s *Server) userUpdateHandler(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, user)
+}
+
+func createUpdateRequestOrExitWithError(ctx *gin.Context) (services.UserUpdateRequest, bool) {
+	var requestUri services.UserUpdateRequestUri
+	if err := ctx.ShouldBindUri(&requestUri); err != nil {
+		ctx.JSON(http.StatusBadRequest, errorResonses(err))
+		return services.UserUpdateRequest{}, true
+	}
+	var requestBody services.UserUpdateRequestBody
+	if err := ctx.ShouldBindJSON(&requestBody); err != nil {
+		ctx.JSON(http.StatusBadRequest, errorResonses(err))
+		return services.UserUpdateRequest{}, true
+	}
+
+	var request services.UserUpdateRequest = services.UserUpdateRequest{
+		Id:   requestUri.Id,
+		Name: requestBody.Name,
+	}
+
+	return request, false
 }
 
 func (s *Server) userSearchHandler(ctx *gin.Context) {
@@ -124,26 +144,6 @@ func (s *Server) userLoginHandler(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusOK, user)
-}
-
-func createRequestOrExitWithError(ctx *gin.Context) (services.UserUpdateRequest, bool) {
-	var requestUri services.UserUpdateRequestUri
-	if err := ctx.ShouldBindUri(&requestUri); err != nil {
-		ctx.JSON(http.StatusBadRequest, errorResonses(err))
-		return services.UserUpdateRequest{}, true
-	}
-	var requestBody services.UserUpdateRequestBody
-	if err := ctx.ShouldBindJSON(&requestBody); err != nil {
-		ctx.JSON(http.StatusBadRequest, errorResonses(err))
-		return services.UserUpdateRequest{}, true
-	}
-
-	var request services.UserUpdateRequest = services.UserUpdateRequest{
-		Id:   requestUri.Id,
-		Name: requestBody.Name,
-	}
-
-	return request, false
 }
 
 func (s *Server) userMotdHandler(ctx *gin.Context) {

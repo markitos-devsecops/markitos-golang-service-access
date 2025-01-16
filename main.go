@@ -20,8 +20,8 @@ func main() {
 	log.Println("['.']:>--- <starting markitos-golang-service-access>")
 
 	config := loadConfiguration()
-
-	tokener, err := implementations.NewTokenerJWT("put-secret-into-app-env")
+	log.Println("['.']:>------- Configuration loaded")
+	tokener, err := implementations.NewTokenerJWT(config.SymmetricKey)
 	if err != nil {
 		log.Fatal("['.']:> error unable to create tokener: ", err)
 	}
