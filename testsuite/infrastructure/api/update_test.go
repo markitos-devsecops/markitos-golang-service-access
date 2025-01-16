@@ -13,10 +13,10 @@ import (
 )
 
 func TestUserUpdateHandler_Success(t *testing.T) {
-	user := &domain.User{Id: domain.UUIDv4(), Name: "Test User"}
+	user := &domain.User{Id: domain.UUIDv4(), Name: domain.RandomPersonName()}
 	userRepository.Create(user)
 
-	updatedName := "Updated User"
+	updatedName := "Updated User " + domain.RandomPersonName()
 	requestBody, _ := json.Marshal(map[string]string{
 		"name": updatedName,
 	})
@@ -36,7 +36,7 @@ func TestUserUpdateHandler_Success(t *testing.T) {
 
 func TestUserUpdateHandler_InvalidID(t *testing.T) {
 	requestBody, _ := json.Marshal(map[string]string{
-		"name": "Updated User",
+		"name": "Updated User " + domain.RandomPersonName(),
 	})
 	recorder := httptest.NewRecorder()
 	request, _ := http.NewRequest(http.MethodPut, "/v1/users/invalid-id", bytes.NewBuffer(requestBody))
@@ -48,7 +48,7 @@ func TestUserUpdateHandler_InvalidID(t *testing.T) {
 }
 
 func TestUserUpdateHandler_MissingName(t *testing.T) {
-	user := &domain.User{Id: domain.UUIDv4(), Name: "Test User"}
+	user := &domain.User{Id: domain.UUIDv4(), Name: domain.RandomPersonName()}
 	userRepository.Create(user)
 
 	requestBody, _ := json.Marshal(map[string]string{})
