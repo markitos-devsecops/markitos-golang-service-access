@@ -1,17 +1,16 @@
-package libs_test
+package dependencies_test
 
 import (
 	"errors"
-	"markitos-golang-service-access/infrastructure/libs"
-	infraLibs "markitos-golang-service-access/infrastructure/libs"
+	"markitos-golang-service-access/infrastructure/implementations"
 	"markitos-golang-service-access/internal/domain"
-	domainLibs "markitos-golang-service-access/internal/domain/libs"
+	"markitos-golang-service-access/internal/domain/dependencies"
 	"testing"
 
 	"github.com/stretchr/testify/require"
 )
 
-var hasher domainLibs.Hasher = infraLibs.NewHasherBCrypt()
+var hasher dependencies.Hasher = implementations.NewHasherBCrypt()
 
 func TestCanCreateABcryptToken(t *testing.T) {
 	hashedContent, err := hasher.Create("any string value")
@@ -28,7 +27,7 @@ func TestCanCreateABcryptToken(t *testing.T) {
 }
 
 func TestCanValidateABcryptToken(t *testing.T) {
-	bcrypt := libs.NewHasherBCrypt()
+	bcrypt := implementations.NewHasherBCrypt()
 	hashedContent, err := bcrypt.Create("any string value")
 	require.NoError(t, err)
 	require.Nil(t, err)

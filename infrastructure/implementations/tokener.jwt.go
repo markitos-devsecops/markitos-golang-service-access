@@ -1,10 +1,9 @@
-package libs
+package implementations
 
 import (
 	"errors"
-	"fmt"
 	"markitos-golang-service-access/internal/domain"
-	"markitos-golang-service-access/internal/domain/libs"
+	"markitos-golang-service-access/internal/domain/dependencies"
 	"time"
 
 	"github.com/golang-jwt/jwt/v5"
@@ -18,9 +17,8 @@ const (
 	TOKENER_JWT_SIMETRIC_KEY_EXACT_LENGTH = 32
 )
 
-func NewTokenerJWT(secretKey string) (libs.Tokener, error) {
+func NewTokenerJWT(secretKey string) (dependencies.Tokener, error) {
 	if len(secretKey) != TOKENER_JWT_SIMETRIC_KEY_EXACT_LENGTH {
-		fmt.Println("Error1111: ", domain.NewTokenerInvalidKeyLengthError(), len(secretKey))
 		return nil, domain.NewTokenerInvalidKeyLengthError()
 	}
 
@@ -34,12 +32,12 @@ func (t TokenerJWT) Create(masterValue string, expireAt time.Duration) (string, 
 		return "", domain.NewTokenerInvalidKeyLengthError()
 	}
 
-	payload := libs.NewPayload(masterValue, expireAt)
+	payload := dependencies.NewPayload(masterValue, expireAt)
 
 	claims := jwt.MapClaims{
-		libs.TOKENER_MASTER_VALUE_JWT_KEY: payload.MasterValue,
-		libs.TOKENER_ISSUED_AT_JWT_KEY:    payload.IssueddAt.Unix(),
-		libs.TOKENER_EXPIRED_AT_JWT_KEY:   payload.ExpiredAt.Unix(),
+		dependencies.TOKENER_MASTER_VALUE_JWT_KEY: payload.MasterValue,
+		dependencies.TOKENER_ISSUED_AT_JWT_KEY:    payload.IssueddAt.Unix(),
+		dependencies.TOKENER_EXPIRED_AT_JWT_KEY:   payload.ExpiredAt.Unix(),
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
@@ -47,7 +45,7 @@ func (t TokenerJWT) Create(masterValue string, expireAt time.Duration) (string, 
 	return token.SignedString([]byte(t.secretKey))
 }
 
-func (t TokenerJWT) Validate(tokenInput string) (*libs.Payload, error) {
+func (t TokenerJWT) Validate(tokenInput string) (*dependencies.Payload, error) {
 
 	parsedToken, err := jwt.ParseWithClaims(tokenInput, jwt.MapClaims{}, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
@@ -60,15 +58,15 @@ func (t TokenerJWT) Validate(tokenInput string) (*libs.Payload, error) {
 		if errors.Is(err, jwt.ErrTokenExpired) {
 			return nil, domain.NewTokenerExpiredError()
 		}
-		return nil, domain.NewTokenerValidationError("ivalid token " + err.Error())
+		return nil, domain.NewTokenerValidationError(err.Error())
 	}
 
 	claims, ok := parsedToken.Claims.(jwt.MapClaims)
 	if !ok || !parsedToken.Valid {
-		return nil, domain.NewTokenerValidationError("invalid token2")
+		return nil, domain.NewTokenerValidationError("invalid claims")
 	}
 
-	payload, err := libs.NewPayloadFromToken(claims)
+	payload, err := dependencies.NewPayloadFromToken(claims)
 	if err != nil {
 		return nil, domain.NewTokenerValidationError("invalid token, payload")
 	}

@@ -2,6 +2,7 @@ package services
 
 import (
 	"markitos-golang-service-access/internal/domain"
+	"markitos-golang-service-access/internal/domain/dependencies"
 )
 
 type UserCreateRequest struct {
@@ -15,10 +16,10 @@ func NewBolilerCreateRequest(name string) UserCreateRequest {
 }
 
 type UserCreateService struct {
-	Repository domain.UserRepository
+	Repository dependencies.UserRepository
 }
 
-func NewUserCreateService(repository domain.UserRepository) UserCreateService {
+func NewUserCreateService(repository dependencies.UserRepository) UserCreateService {
 	return UserCreateService{Repository: repository}
 }
 

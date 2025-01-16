@@ -1,8 +1,8 @@
-package libs
+package implementations
 
 import (
 	"markitos-golang-service-access/internal/domain"
-	"markitos-golang-service-access/internal/domain/libs"
+	"markitos-golang-service-access/internal/domain/dependencies"
 	"time"
 
 	"github.com/o1egl/paseto"
@@ -17,7 +17,7 @@ const (
 	TOKENER_PASSETO_CHACHA20POLY_KEYSIZE = 32
 )
 
-func NewTokenerPasseto(secretKey string) (libs.Tokener, error) {
+func NewTokenerPasseto(secretKey string) (dependencies.Tokener, error) {
 	if len(secretKey) != TOKENER_PASSETO_CHACHA20POLY_KEYSIZE {
 		return nil, domain.NewTokenerInvalidKeyLengthError()
 	}
@@ -33,7 +33,7 @@ func (t TokenerPasseto) Create(masterValue string, expireAt time.Duration) (stri
 		return "", domain.NewTokenerInvalidKeyLengthError()
 	}
 
-	payload := libs.NewPayload(masterValue, expireAt)
+	payload := dependencies.NewPayload(masterValue, expireAt)
 	token, err := t.paseto.Encrypt(t.secretKey, payload, nil)
 	if err != nil {
 		return "", domain.NewTokenerValidationError("error creating token " + err.Error())
@@ -42,8 +42,8 @@ func (t TokenerPasseto) Create(masterValue string, expireAt time.Duration) (stri
 	return token, nil
 }
 
-func (t TokenerPasseto) Validate(tokenInput string) (*libs.Payload, error) {
-	payload := &libs.Payload{}
+func (t TokenerPasseto) Validate(tokenInput string) (*dependencies.Payload, error) {
+	payload := &dependencies.Payload{}
 
 	err := t.paseto.Decrypt(tokenInput, t.secretKey, payload, nil)
 	if err != nil {

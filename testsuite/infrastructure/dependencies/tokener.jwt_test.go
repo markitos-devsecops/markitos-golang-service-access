@@ -1,10 +1,10 @@
-package libs_test
+package dependencies_test
 
 import (
 	"errors"
-	infraLibs "markitos-golang-service-access/infrastructure/libs"
+	"markitos-golang-service-access/infrastructure/implementations"
 	"markitos-golang-service-access/internal/domain"
-	"markitos-golang-service-access/internal/domain/libs"
+	"markitos-golang-service-access/internal/domain/dependencies"
 	"strings"
 	"testing"
 	"time"
@@ -101,7 +101,7 @@ func TestTokenerJWTInvalidSecretKeySize(t *testing.T) {
 	require.NoError(t, err)
 	require.NotEmpty(t, token)
 
-	invalidTokener, _ := infraLibs.NewTokenerJWT(USER_TEST_TOKENER_JWT_SECRET2)
+	invalidTokener, _ := implementations.NewTokenerJWT(USER_TEST_TOKENER_JWT_SECRET2)
 	_, err = invalidTokener.Validate(token)
 	require.Error(t, err)
 	var tokenerValidationError *domain.TokenerValidationError
@@ -128,8 +128,8 @@ func TestTokenerJWTNoneAlgorithmAttack(t *testing.T) {
 	require.True(t, errors.As(err, &tokenerValidationError))
 }
 
-func CreateTokenerJWT(t *testing.T) libs.Tokener {
-	tokener, err := infraLibs.NewTokenerJWT(USER_TEST_TOKENER_JWT_SECRET1)
+func CreateTokenerJWT(t *testing.T) dependencies.Tokener {
+	tokener, err := implementations.NewTokenerJWT(USER_TEST_TOKENER_JWT_SECRET1)
 	require.NoError(t, err)
 	require.NotNil(t, tokener)
 

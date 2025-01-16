@@ -2,6 +2,7 @@ package services
 
 import (
 	"markitos-golang-service-access/internal/domain"
+	"markitos-golang-service-access/internal/domain/dependencies"
 	"time"
 )
 
@@ -26,10 +27,10 @@ func NewUserUpdateRequest(id string, name string) *UserUpdateRequest {
 }
 
 type UserUpdateService struct {
-	Repository domain.UserRepository
+	Repository dependencies.UserRepository
 }
 
-func NewUserUpdateService(repository domain.UserRepository) UserUpdateService {
+func NewUserUpdateService(repository dependencies.UserRepository) UserUpdateService {
 	return UserUpdateService{Repository: repository}
 }
 

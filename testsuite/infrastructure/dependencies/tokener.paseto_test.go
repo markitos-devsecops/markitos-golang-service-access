@@ -1,10 +1,10 @@
-package libs_test
+package dependencies_test
 
 import (
 	"errors"
-	infraLibs "markitos-golang-service-access/infrastructure/libs"
+	"markitos-golang-service-access/infrastructure/implementations"
 	"markitos-golang-service-access/internal/domain"
-	"markitos-golang-service-access/internal/domain/libs"
+	"markitos-golang-service-access/internal/domain/dependencies"
 	"strings"
 	"testing"
 	"time"
@@ -79,15 +79,15 @@ func TestTokenerPasetoInvalidSecretKeySize(t *testing.T) {
 	require.NoError(t, err)
 	require.NotEmpty(t, token)
 
-	invalidTokener, _ := infraLibs.NewTokenerJWT(USER_TEST_TOKENER_PASETO_SECRET2)
+	invalidTokener, _ := implementations.NewTokenerJWT(USER_TEST_TOKENER_PASETO_SECRET2)
 	_, err = invalidTokener.Validate(token)
 	require.Error(t, err)
 	var tokenerValidationError *domain.TokenerValidationError
 	require.True(t, errors.As(err, &tokenerValidationError))
 }
 
-func CreateTokenerPaseto(t *testing.T) libs.Tokener {
-	tokener, err := infraLibs.NewTokenerPasseto(USER_TEST_TOKENER_PASETO_SECRET1)
+func CreateTokenerPaseto(t *testing.T) dependencies.Tokener {
+	tokener, err := implementations.NewTokenerPasseto(USER_TEST_TOKENER_PASETO_SECRET1)
 	require.NoError(t, err)
 	require.NotNil(t, tokener)
 

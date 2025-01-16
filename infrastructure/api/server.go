@@ -1,14 +1,14 @@
 package api
 
 import (
-	"markitos-golang-service-access/internal/domain"
+	"markitos-golang-service-access/internal/domain/dependencies"
 
 	"github.com/gin-gonic/gin"
 )
 
 type Server struct {
 	address    string
-	repository domain.UserRepository
+	repository dependencies.UserRepository
 	router     *gin.Engine
 }
 
@@ -16,11 +16,11 @@ func (s *Server) Router() *gin.Engine {
 	return s.router
 }
 
-func (s *Server) Repository() domain.UserRepository {
+func (s *Server) Repository() dependencies.UserRepository {
 	return s.repository
 }
 
-func NewServer(address string, repository domain.UserRepository) *Server {
+func NewServer(address string, repository dependencies.UserRepository) *Server {
 	server := &Server{
 		address:    address,
 		repository: repository,

@@ -1,4 +1,4 @@
-package libs
+package dependencies
 
 type Hasher interface {
 	Create(content string) (string, error)

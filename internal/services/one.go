@@ -2,6 +2,7 @@ package services
 
 import (
 	"markitos-golang-service-access/internal/domain"
+	"markitos-golang-service-access/internal/domain/dependencies"
 )
 
 type UserOneRequest struct {
@@ -13,10 +14,10 @@ func NewUserOneRequest(id string) UserOneRequest {
 }
 
 type UserOneService struct {
-	Repository domain.UserRepository
+	Repository dependencies.UserRepository
 }
 
-func NewUserOneService(repository domain.UserRepository) UserOneService {
+func NewUserOneService(repository dependencies.UserRepository) UserOneService {
 	return UserOneService{Repository: repository}
 }
 

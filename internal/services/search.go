@@ -2,13 +2,14 @@ package services
 
 import (
 	"markitos-golang-service-access/internal/domain"
+	"markitos-golang-service-access/internal/domain/dependencies"
 )
 
 type UserSearchService struct {
-	Repository domain.UserRepository
+	Repository dependencies.UserRepository
 }
 
-func NewUserSearchService(repository domain.UserRepository) UserSearchService {
+func NewUserSearchService(repository dependencies.UserRepository) UserSearchService {
 	return UserSearchService{Repository: repository}
 }
 

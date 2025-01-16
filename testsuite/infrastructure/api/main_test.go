@@ -3,6 +3,7 @@ package api_test
 import (
 	"markitos-golang-service-access/infrastructure/api"
 	"markitos-golang-service-access/internal/domain"
+	"markitos-golang-service-access/internal/domain/dependencies"
 	"os"
 	"testing"
 
@@ -10,7 +11,7 @@ import (
 )
 
 var userApiServer *api.Server
-var userRepository domain.UserRepository
+var userRepository dependencies.UserRepository
 
 func TestMain(m *testing.M) {
 	userApiServer = setupTestServer()

@@ -1,4 +1,4 @@
-package libs
+package implementations
 
 import (
 	"markitos-golang-service-access/internal/domain"
