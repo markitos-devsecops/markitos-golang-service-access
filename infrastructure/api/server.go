@@ -9,6 +9,8 @@ import (
 type Server struct {
 	address    string
 	repository dependencies.UserRepository
+	tokener    dependencies.Tokener
+	hasher     dependencies.Hasher
 	router     *gin.Engine
 }
 
@@ -20,11 +22,19 @@ func (s *Server) Repository() dependencies.UserRepository {
 	return s.repository
 }
 
-func NewServer(address string, repository dependencies.UserRepository) *Server {
+func NewServer(
+	address string,
+	repository dependencies.UserRepository,
+	tokener dependencies.Tokener,
+	hasher dependencies.Hasher) *Server {
+
 	server := &Server{
 		address:    address,
 		repository: repository,
+		tokener:    tokener,
+		hasher:     hasher,
 	}
+
 	server.router = server.createRouter()
 
 	return server
@@ -33,6 +43,7 @@ func NewServer(address string, repository dependencies.UserRepository) *Server {
 func (s *Server) createRouter() *gin.Engine {
 	router := gin.Default()
 	router.POST("/v1/users", s.userCreateHandler)
+	router.POST("/v1/users/login", s.userLoginHandler)
 	router.GET("/v1/users/all", s.userListHandler)
 	router.GET("/v1/users/:id", s.userOneHandler)
 	router.PUT("/v1/users/:id", s.userUpdateHandler)

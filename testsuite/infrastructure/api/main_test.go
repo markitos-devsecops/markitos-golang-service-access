@@ -12,16 +12,20 @@ import (
 
 var userApiServer *api.Server
 var userRepository dependencies.UserRepository
+var userHasher dependencies.Hasher
+var userTokener dependencies.Tokener
 
 func TestMain(m *testing.M) {
+	userRepository = domain.NewUserInMemoryRepository()
+	userHasher = NewMockSpyUserHasher()
+	userTokener = NewMockSpyUserTokener()
 	userApiServer = setupTestServer()
-	userRepository = userApiServer.Repository()
 
 	os.Exit(m.Run())
 }
 
 func setupTestServer() *api.Server {
 	gin.SetMode(gin.TestMode)
-	repo := domain.NewUserInMemoryRepository()
-	return api.NewServer(":8080", repo)
+
+	return api.NewServer(":8080", userRepository, userTokener, userHasher)
 }

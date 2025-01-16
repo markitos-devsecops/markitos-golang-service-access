@@ -109,6 +109,23 @@ func (s *Server) userSearchHandler(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, user)
 }
 
+func (s *Server) userLoginHandler(ctx *gin.Context) {
+	var request services.UserLoginRequest
+	if err := ctx.ShouldBindJSON(&request); err != nil {
+		ctx.JSON(http.StatusBadRequest, errorResonses(err))
+		return
+	}
+
+	var service services.UserLoginService = services.NewUserLoginService(s.repository, s.hasher, s.tokener)
+	user, err := service.Execute(request)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, errorResonses(err))
+		return
+	}
+
+	ctx.JSON(http.StatusOK, user)
+}
+
 func createRequestOrExitWithError(ctx *gin.Context) (services.UserUpdateRequest, bool) {
 	var requestUri services.UserUpdateRequestUri
 	if err := ctx.ShouldBindUri(&requestUri); err != nil {

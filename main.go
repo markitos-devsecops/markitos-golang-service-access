@@ -5,7 +5,9 @@ import (
 	"markitos-golang-service-access/infrastructure/api"
 	"markitos-golang-service-access/infrastructure/configuration"
 	"markitos-golang-service-access/infrastructure/database"
+	"markitos-golang-service-access/infrastructure/implementations"
 	"markitos-golang-service-access/internal/domain"
+	"markitos-golang-service-access/internal/domain/dependencies"
 
 	"github.com/gin-gonic/gin"
 	"gorm.io/driver/postgres"
@@ -18,12 +20,19 @@ func main() {
 	log.Println("['.']:>--- <starting markitos-golang-service-access>")
 
 	config := loadConfiguration()
+
+	tokener, err := implementations.NewTokenerJWT("put-secret-into-app-env")
+	if err != nil {
+		log.Fatal("['.']:> error unable to create tokener: ", err)
+	}
+	hasher := implementations.NewHasherBCrypt()
+
 	repository, err := loadDatabase(config)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	server := loadServer(config, repository)
+	server := loadServer(config, repository, tokener, hasher)
 	log.Println("['.']:>--- </starting markitos-golang-service-access>")
 	log.Println("['.']:>--------------------------------------------")
 	log.Println("['.']:>")
@@ -33,9 +42,13 @@ func main() {
 	}
 }
 
-func loadServer(config configuration.MarkitosGolangServiceAccessConfig, repository *database.UserPostgresRepository) *api.Server {
+func loadServer(
+	config configuration.MarkitosGolangServiceAccessConfig,
+	repository *database.UserPostgresRepository,
+	tokener dependencies.Tokener,
+	hasher dependencies.Hasher) *api.Server {
 	gin.SetMode(gin.ReleaseMode)
-	server := api.NewServer(config.AppAddress, repository)
+	server := api.NewServer(config.AppAddress, repository, tokener, hasher)
 	log.Println("['.']:>------- New server created")
 	return server
 }
