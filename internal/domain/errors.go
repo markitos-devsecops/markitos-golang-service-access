@@ -208,3 +208,16 @@ func NewTokenerExpiredError() error {
 func (e *TokenerExpiredError) Error() string {
 	return ERROR_TOKENER_VALIDATION
 }
+
+const ERROR_USER_UNAUTHORIZED = "user its not authorized"
+
+type UserUnauthorizedError struct {
+}
+
+func NewUnauthorizedError() error {
+	return &UserUnauthorizedError{}
+}
+
+func (e *UserUnauthorizedError) Error() string {
+	return ERROR_USER_UNAUTHORIZED
+}

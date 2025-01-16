@@ -40,6 +40,7 @@ createdb:
 	bash bin/createdb.sh
 dropdb: 
 	bash bin/dropdb.sh
+recreatedb: dropdb createdb test
 #:[.''.]:>-------------------------------------------
 
 

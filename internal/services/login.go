@@ -25,7 +25,10 @@ func NewUserLoginService(
 	repository dependencies.UserRepository,
 	hasher dependencies.Hasher,
 	tokener dependencies.Tokener) UserLoginService {
-	return UserLoginService{Repository: repository}
+
+	return UserLoginService{
+		Repository: repository,
+	}
 }
 
 func (s *UserLoginService) Execute(request UserLoginRequest) (*domain.User, error) {
@@ -38,7 +41,10 @@ func (s *UserLoginService) Execute(request UserLoginRequest) (*domain.User, erro
 		return nil, err
 	}
 
-	user, _ := domain.NewUser(domain.UUIDv4(), domain.RandomPersonName(), securedEmail.Value(), securedPassword.Value())
+	user, _ := s.Repository.OneFromEmailAndPassword(securedEmail.Value(), securedPassword.Value())
+	if user == nil {
+		return nil, domain.NewUnauthorizedError()
+	}
 
 	return user, nil
 }
