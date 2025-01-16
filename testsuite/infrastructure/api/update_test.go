@@ -13,15 +13,16 @@ import (
 )
 
 func TestUserUpdateHandler_Success(t *testing.T) {
-	user := &domain.User{Id: domain.UUIDv4(), Name: domain.RandomPersonName()}
+	userRandomId := domain.UUIDv4()
+	user := &domain.User{Id: userRandomId, Name: domain.RandomPersonName()}
 	userRepository.Create(user)
 
-	updatedName := "Updated User " + domain.RandomPersonName()
+	updatedName := domain.RandomPersonName()
 	requestBody, _ := json.Marshal(map[string]string{
 		"name": updatedName,
 	})
 	recorder := httptest.NewRecorder()
-	request, _ := http.NewRequest(http.MethodPut, "/v1/users/"+user.Id, bytes.NewBuffer(requestBody))
+	request, _ := http.NewRequest(http.MethodPut, "/v1/users/"+userRandomId, bytes.NewBuffer(requestBody))
 	request.Header.Set("Content-Type", "application/json")
 
 	userApiServer.Router().ServeHTTP(recorder, request)
@@ -30,7 +31,7 @@ func TestUserUpdateHandler_Success(t *testing.T) {
 	var response domain.User
 	err := json.Unmarshal(recorder.Body.Bytes(), &response)
 	assert.NoError(t, err)
-	assert.Equal(t, user.Id, response.Id)
+	assert.Equal(t, userRandomId, response.Id)
 	assert.Equal(t, updatedName, response.Name)
 }
 

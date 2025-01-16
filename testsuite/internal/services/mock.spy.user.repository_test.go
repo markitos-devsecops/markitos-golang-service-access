@@ -3,18 +3,24 @@ package services_test
 import "markitos-golang-service-access/internal/domain"
 
 type MockSpyUserRepository struct {
-	LastCreatedUser       *domain.User
-	LastCreatedForOneUser *domain.User
-	OneCalled             bool
-	LastUpdatedUser       *domain.User
+	LastCreatedUser                        *domain.User
+	LastCreatedForOneUser                  *domain.User
+	OneCalled                              bool
+	LastUpdatedUser                        *domain.User
+	LastOneFromEmailAndPasswordEmail       string
+	LastOneFromEmailAndPasswordPassword    string
+	LastOneFromEmailAndPasswordEmailCalled bool
 }
 
 func NewMockSpyUserRepository() *MockSpyUserRepository {
 	return &MockSpyUserRepository{
-		LastCreatedUser:       nil,
-		LastCreatedForOneUser: nil,
-		OneCalled:             false,
-		LastUpdatedUser:       nil,
+		LastCreatedUser:                        nil,
+		LastCreatedForOneUser:                  nil,
+		OneCalled:                              false,
+		LastUpdatedUser:                        nil,
+		LastOneFromEmailAndPasswordEmail:       "",
+		LastOneFromEmailAndPasswordPassword:    "",
+		LastOneFromEmailAndPasswordEmailCalled: false,
 	}
 }
 
@@ -64,6 +70,19 @@ func (m *MockSpyUserRepository) SearchAndPaginate(searchTerm string, pageNumber 
 			Id:   VALID_UUIDV4,
 			Name: VALID_NAME,
 		},
+	}, nil
+}
+
+func (m *MockSpyUserRepository) OneFromEmailAndPassword(email, password string) (*domain.User, error) {
+	m.LastOneFromEmailAndPasswordEmail = email
+	m.LastOneFromEmailAndPasswordPassword = password
+	m.LastOneFromEmailAndPasswordEmailCalled = true
+
+	return &domain.User{
+		Id:       VALID_UUIDV4,
+		Name:     VALID_NAME,
+		Email:    email,
+		Password: password,
 	}, nil
 }
 

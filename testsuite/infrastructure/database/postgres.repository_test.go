@@ -73,14 +73,14 @@ func TestUserUpdate(t *testing.T) {
 	user, _ := domain.NewUser(domain.UUIDv4(), domain.RandomPersonName(), domain.RandomEmail(), domain.RandomPassword(10))
 	db.Create(user)
 
-	user.Name = "Updated Name"
+	user.Name = "Updated Name " + domain.RandomPersonName()
 	err := repository.Update(user)
 	require.NoError(t, err)
 
 	var result domain.User
 	err = db.First(&result, "id = ?", user.Id).Error
 	require.NoError(t, err)
-	require.Equal(t, "Updated Name", result.Name)
+	require.Equal(t, user.Name, result.Name)
 }
 
 func TestUserOne(t *testing.T) {
@@ -145,6 +145,22 @@ func TestSearchAndPagination(t *testing.T) {
 
 	cleanDB(db)
 }
+
+// func TestOneFromEmailAndPassword(t *testing.T) {
+// 	db := setupTestDB()
+// 	repo := database.NewUserPostgresRepository(db)
+
+// 	user, _ := domain.NewUser(domain.UUIDv4(), domain.RandomPersonName(), "email@email.com", "anyPassw0d")
+// 	db.Create(user)
+
+// 	result, err := repo.OneFromEmailAndPassword(user.Email, user.Password)
+// 	require.NoError(t, err)
+// 	require.NotNil(t, result)
+// 	require.Equal(t, user.Id, result.Id)
+// 	require.Equal(t, user.Name, result.Name)
+// 	require.Equal(t, user.Email, result.Email)
+// 	require.Equal(t, user.Password, result.Password)
+// }
 
 func setupTestDB() *gorm.DB {
 	config, err := configuration.LoadConfiguration("../../..")

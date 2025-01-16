@@ -80,3 +80,13 @@ func (s *UserInMemoryRepository) SearchAndPaginate(searchTerm string, pageNumber
 
 	return filtered[start:end], nil
 }
+
+func (s *UserInMemoryRepository) OneFromEmailAndPassword(email, password string) (*User, error) {
+	for _, user := range s.users {
+		if user.Email == email && user.Password == password {
+			return user, nil
+		}
+	}
+
+	return nil, errors.New("user not found")
+}

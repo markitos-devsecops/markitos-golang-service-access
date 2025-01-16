@@ -9,4 +9,5 @@ type UserRepository interface {
 	One(id *string) (*domain.User, error)
 	List() ([]*domain.User, error)
 	SearchAndPaginate(searchTerm string, pageNumber int, pageSize int) ([]*domain.User, error)
+	OneFromEmailAndPassword(email, password string) (*domain.User, error)
 }

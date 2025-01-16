@@ -36,7 +36,7 @@ func (s *Server) createRouter() *gin.Engine {
 	router.GET("/v1/users/all", s.userListHandler)
 	router.GET("/v1/users/:id", s.userOneHandler)
 	router.PUT("/v1/users/:id", s.userUpdateHandler)
-	router.GET("/v1/", s.userMotdHandler)
+	router.GET("/v1/users/motd", s.userMotdHandler)
 	router.GET("/v1/users", s.userSearchHandler)
 
 	return router

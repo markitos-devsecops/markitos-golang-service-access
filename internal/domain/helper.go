@@ -52,7 +52,7 @@ func RandomPersonName() string {
 	minWords, maxWords := 1, 6
 	wordCount, _ := rand.Int(rand.Reader, big.NewInt(int64(maxWords-minWords+1)))
 	wordCount = big.NewInt(wordCount.Int64() + int64(minWords))
-	minLength, maxLength := 3, 150
+	minLength, maxLength := 3, 50
 
 	var result []string
 	currentLength := 0
