@@ -1,4 +1,5 @@
-- duration en configuration 24h <- human redeable
+- revisar bien los tests e2e tienen mucha mejora no me gustan nada
+- poner config pero human redeable tipo 24h 55m asi, TokenDuration time.Duration `mapstructure:"APP_TOKEN_DURATION"`
 - el login debe devolver datos de usuarios no solo token, al menos id y nombre personal
 - update documentation
 - anemiar proyecto :)
