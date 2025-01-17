@@ -7,7 +7,5 @@ type UserRepository interface {
 	Delete(id *string) error
 	Update(user *domain.User) error
 	One(id *string) (*domain.User, error)
-	List() ([]*domain.User, error)
-	SearchAndPaginate(searchTerm string, pageNumber int, pageSize int) ([]*domain.User, error)
 	OneFromEmail(email string) (*domain.User, error)
 }

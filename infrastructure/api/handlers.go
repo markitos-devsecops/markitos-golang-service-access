@@ -5,7 +5,6 @@ import (
 	"markitos-golang-service-access/internal/services"
 	"net/http"
 	"os"
-	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -26,17 +25,6 @@ func (s *Server) userCreateHandler(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusCreated, user)
-}
-
-func (s *Server) userListHandler(ctx *gin.Context) {
-	var service services.UserListService = services.NewUserListService(s.repository)
-	user, err := service.Execute()
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, errorResonses(err))
-		return
-	}
-
-	ctx.JSON(http.StatusOK, user)
 }
 
 func (s *Server) userOneHandler(ctx *gin.Context) {
@@ -90,44 +78,6 @@ func createUpdateRequestOrExitWithError(ctx *gin.Context) (services.UserUpdateRe
 	}
 
 	return request, false
-}
-
-func (s *Server) userSearchHandler(ctx *gin.Context) {
-	searchTerm := ctx.Query("search")
-	pageNumberStr := ctx.DefaultQuery("page", "1")
-	if pageNumberStr == "" {
-		pageNumberStr = "1"
-	}
-	pageSizeStr := ctx.DefaultQuery("size", "10")
-	if pageSizeStr == "" {
-		pageSizeStr = "10"
-	}
-
-	pageNumber, err := strconv.Atoi(pageNumberStr)
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, errorResonses(err))
-		return
-	}
-
-	pageSize, err := strconv.Atoi(pageSizeStr)
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, errorResonses(err))
-		return
-	}
-
-	var service services.UserSearchService = services.NewUserSearchService(s.repository)
-	var request services.UserSearchRequest = services.UserSearchRequest{
-		SearchTerm: searchTerm,
-		PageNumber: pageNumber,
-		PageSize:   pageSize,
-	}
-	user, err := service.Execute(request)
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, errorResonses(err))
-		return
-	}
-
-	ctx.JSON(http.StatusOK, user)
 }
 
 func (s *Server) userLoginHandler(ctx *gin.Context) {

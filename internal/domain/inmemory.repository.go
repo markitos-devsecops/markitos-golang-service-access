@@ -2,7 +2,6 @@ package domain
 
 import (
 	"errors"
-	"strings"
 )
 
 type UserInMemoryRepository struct {
@@ -48,37 +47,6 @@ func (s *UserInMemoryRepository) Update(user *User) error {
 	existingUser.UpdatedAt = user.UpdatedAt
 
 	return nil
-}
-
-func (s *UserInMemoryRepository) List() ([]*User, error) {
-	var result []*User
-	for _, value := range s.users {
-		result = append(result, value)
-	}
-
-	return result, nil
-}
-
-func (s *UserInMemoryRepository) SearchAndPaginate(searchTerm string, pageNumber int, pageSize int) ([]*User, error) {
-	var filtered []*User
-	for _, user := range s.users {
-		if strings.Contains(user.Name, searchTerm) {
-			filtered = append(filtered, user)
-		}
-	}
-
-	start := (pageNumber - 1) * pageSize
-	end := start + pageSize
-
-	if start > len(filtered) {
-		return []*User{}, nil
-	}
-
-	if end > len(filtered) {
-		end = len(filtered)
-	}
-
-	return filtered[start:end], nil
 }
 
 func (s *UserInMemoryRepository) OneFromEmail(email string) (*User, error) {

@@ -64,33 +64,3 @@ func TestOne(t *testing.T) {
 	assert.NoError(t, err)
 	assert.Equal(t, user.Name, result.Name)
 }
-
-func TestList(t *testing.T) {
-	repo := setupInMemoryRepo()
-
-	user1 := &domain.User{Id: domain.UUIDv4(), Name: "Test User 1"}
-	user2 := &domain.User{Id: domain.UUIDv4(), Name: "Test User 2"}
-	err := repo.Create(user1)
-	assert.NoError(t, err)
-	err = repo.Create(user2)
-	assert.NoError(t, err)
-
-	results, err := repo.List()
-	assert.NoError(t, err)
-	assert.Len(t, results, 2)
-}
-
-func TestSearchAndPaginate(t *testing.T) {
-	repo := setupInMemoryRepo()
-
-	for i := 0; i < 25; i++ {
-		name := "Test User " + domain.RandomString(5)
-		user := &domain.User{Id: domain.UUIDv4(), Name: name}
-		err := repo.Create(user)
-		assert.NoError(t, err)
-	}
-
-	results, err := repo.SearchAndPaginate("Test", 2, 10)
-	assert.NoError(t, err)
-	assert.Len(t, results, 10)
-}

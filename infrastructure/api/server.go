@@ -42,16 +42,13 @@ func NewServer(
 
 func (s *Server) createRouter() *gin.Engine {
 	router := gin.Default()
+	router.GET("/v1/users/motd", s.userMotdHandler)
 	router.POST("/v1/users", s.userCreateHandler)
 	router.POST("/v1/users/login", s.userLoginHandler)
+	router.GET("/v1/users/:id", s.userOneHandler)
 
 	protectedRoutes := router.Group("/").Use(bearerTokenMiddleware(s.tokener))
-	protectedRoutes.GET("/v1/users/all", s.userListHandler)
-
-	router.GET("/v1/users/:id", s.userOneHandler)
-	router.PUT("/v1/users/:id", s.userUpdateHandler)
-	router.GET("/v1/users/motd", s.userMotdHandler)
-	router.GET("/v1/users", s.userSearchHandler)
+	protectedRoutes.PUT("/v1/users/:id", s.userUpdateHandler)
 
 	return router
 }

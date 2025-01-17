@@ -4,3 +4,9 @@
 - anemiar proyecto :)
 - selector de tokener
 - hechar un ojo a main y dejarlo bien
+- test postgres, limpieza
+- inmemory random values
+- test con auth middleware de  one y update
+- update must be changeName
+- create changePassword
+- pensando en el recovery - publish event ?

@@ -2,7 +2,6 @@ package database
 
 // TODO: only return domain errors
 import (
-	"fmt"
 	"markitos-golang-service-access/internal/domain"
 
 	"gorm.io/gorm"
@@ -35,30 +34,6 @@ func (r *UserPostgresRepository) One(id *string) (*domain.User, error) {
 	}
 
 	return &user, nil
-}
-
-func (r *UserPostgresRepository) List() ([]*domain.User, error) {
-	var users []*domain.User
-	if err := r.db.Find(&users).Error; err != nil {
-		return nil, err
-	}
-
-	return users, nil
-}
-
-func (r *UserPostgresRepository) SearchAndPaginate(searchTerm string, pageNumber int, pageSize int) ([]*domain.User, error) {
-	offset := (pageNumber - 1) * pageSize
-	var users []*domain.User
-	if err := r.db.Where("name ILIKE ?", fmt.Sprintf("%%%s%%", searchTerm)).
-		Order("name").
-		Limit(pageSize).
-		Offset(offset).
-		Find(&users).Error; err != nil {
-
-		return nil, err
-	}
-
-	return users, nil
 }
 
 func (r *UserPostgresRepository) OneFromEmail(email string) (*domain.User, error) {
