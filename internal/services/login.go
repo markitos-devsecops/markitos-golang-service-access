@@ -69,6 +69,5 @@ func (s *UserLoginService) Execute(request UserLoginRequest) (*UserLoginResponse
 	if err != nil {
 		return nil, err
 	}
-
 	return NewUserLoginResponse(token), nil
 }

@@ -11,3 +11,5 @@
 - create changePassword
 - create canI siempre con token
 - pensando en el recovery - publish event ?
+- mastervalues = user
+- el id no esta claro su procedencia no hay normas, ponla

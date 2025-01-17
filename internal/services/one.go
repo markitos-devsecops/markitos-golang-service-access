@@ -5,23 +5,23 @@ import (
 	"markitos-golang-service-access/internal/domain/dependencies"
 )
 
-type UserOneRequest struct {
+type UserMeRequest struct {
 	Id string `uri:"id" binding:"required" minLength:"36" maxLength:"36"`
 }
 
-func NewUserOneRequest(id string) UserOneRequest {
-	return UserOneRequest{Id: id}
+func NewUserMeRequest(id string) UserMeRequest {
+	return UserMeRequest{Id: id}
 }
 
-type UserOneService struct {
+type UserMeService struct {
 	Repository dependencies.UserRepository
 }
 
-func NewUserOneService(repository dependencies.UserRepository) UserOneService {
-	return UserOneService{Repository: repository}
+func NewUserMeService(repository dependencies.UserRepository) UserMeService {
+	return UserMeService{Repository: repository}
 }
 
-func (s *UserOneService) Execute(request UserOneRequest) (*domain.User, error) {
+func (s *UserMeService) Execute(request UserMeRequest) (*domain.User, error) {
 	requestedId := &request.Id
 	userId, err := domain.NewUserId(*requestedId)
 	if err != nil {

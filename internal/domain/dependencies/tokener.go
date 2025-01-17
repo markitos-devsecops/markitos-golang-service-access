@@ -19,16 +19,20 @@ type Tokener interface {
 
 type Payload struct {
 	MasterValue string    `json:"master_value"`
-	IssueddAt   time.Time `json:"issued_at"`
+	IssuedAt    time.Time `json:"issued_at"`
 	ExpiredAt   time.Time `json:"expired_at"`
 }
 
-func NewPayload(masterValye string, duration time.Duration) *Payload {
+func NewPayload(masterValue string, duration time.Duration) *Payload {
 	return &Payload{
-		MasterValue: masterValye,
-		IssueddAt:   time.Now(),
+		MasterValue: masterValue,
+		IssuedAt:    time.Now(),
 		ExpiredAt:   time.Now().Add(duration),
 	}
+}
+
+func (p *Payload) User() string {
+	return p.MasterValue
 }
 
 func NewPayloadFromToken(parsedToken map[string]interface{}) (*Payload, error) {
@@ -51,7 +55,7 @@ func NewPayloadFromToken(parsedToken map[string]interface{}) (*Payload, error) {
 
 	return &Payload{
 		MasterValue: masterValue,
-		IssueddAt:   issuedAt,
+		IssuedAt:    issuedAt,
 		ExpiredAt:   expiredAt,
 	}, nil
 }

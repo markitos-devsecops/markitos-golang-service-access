@@ -14,9 +14,9 @@ const VALID_EMAIL = "email@email.com"
 var userMockSpyRepository dependencies.UserRepository
 var userMockSpyHasher dependencies.Hasher
 var userMockSpyTokener dependencies.Tokener
-var userCreateService services.UserCreateService
-var userOneService services.UserOneService
-var userUpdateService services.UserUpdateService
+var userRegisterService services.UserRegisterService
+var userMeService services.UserMeService
+var userUpdateMeService services.UserUpdateMeService
 var userLoginService services.UserLoginService
 
 func TestMain(m *testing.M) {
@@ -24,9 +24,9 @@ func TestMain(m *testing.M) {
 	userMockSpyHasher = NewMockSpyUserHasher()
 	userMockSpyTokener = NewMockSpyUserTokener()
 
-	userCreateService = services.NewUserCreateService(userMockSpyRepository, userMockSpyHasher)
-	userOneService = services.NewUserOneService(userMockSpyRepository)
-	userUpdateService = services.NewUserUpdateService(userMockSpyRepository)
+	userRegisterService = services.NewUserRegisterService(userMockSpyRepository, userMockSpyHasher)
+	userMeService = services.NewUserMeService(userMockSpyRepository)
+	userUpdateMeService = services.NewUserUpdateMeService(userMockSpyRepository)
 	userLoginService = services.NewUserLoginService(userMockSpyRepository, userMockSpyHasher, userMockSpyTokener)
 
 	os.Exit(m.Run())

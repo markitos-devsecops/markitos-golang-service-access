@@ -5,26 +5,22 @@ import (
 	"markitos-golang-service-access/internal/domain/dependencies"
 )
 
-type UserCreateRequest struct {
+type UserRegisterRequest struct {
 	Name     string `json:"name" binding:"required"`
 	Email    string `json:"email" binding:"required,email"`
 	Password string `json:"password" binding:"required"`
 }
 
-func NewBolilerCreateRequest(name string) UserCreateRequest {
-	return UserCreateRequest{Name: name}
-}
-
-type UserCreateService struct {
+type UserRegisterService struct {
 	Repository     dependencies.UserRepository
 	PasswordHasher dependencies.Hasher
 }
 
-func NewUserCreateService(repository dependencies.UserRepository, hasher dependencies.Hasher) UserCreateService {
-	return UserCreateService{Repository: repository, PasswordHasher: hasher}
+func NewUserRegisterService(repository dependencies.UserRepository, hasher dependencies.Hasher) UserRegisterService {
+	return UserRegisterService{Repository: repository, PasswordHasher: hasher}
 }
 
-func (s *UserCreateService) Execute(request UserCreateRequest) (*domain.User, error) {
+func (s *UserRegisterService) Execute(request UserRegisterRequest) (*domain.User, error) {
 	user, err := domain.NewUser(domain.UUIDv4(), request.Name, request.Email, request.Password)
 	if err != nil {
 		return nil, err

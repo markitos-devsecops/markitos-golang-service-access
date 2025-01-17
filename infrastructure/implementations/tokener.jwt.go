@@ -36,7 +36,7 @@ func (t TokenerJWT) Create(masterValue string, expireAt time.Duration) (string, 
 
 	claims := jwt.MapClaims{
 		dependencies.TOKENER_MASTER_VALUE_JWT_KEY: payload.MasterValue,
-		dependencies.TOKENER_ISSUED_AT_JWT_KEY:    payload.IssueddAt.Unix(),
+		dependencies.TOKENER_ISSUED_AT_JWT_KEY:    payload.IssuedAt.Unix(),
 		dependencies.TOKENER_EXPIRED_AT_JWT_KEY:   payload.ExpiredAt.Unix(),
 	}
 

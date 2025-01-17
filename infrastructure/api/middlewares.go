@@ -9,9 +9,23 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func GetAuthenticatedUser(ctx *gin.Context) (string, error) {
+	authPayload, exists := ctx.Get("auth_payload")
+	if !exists || authPayload == nil {
+		return "", domain.NewUnauthorizedError()
+	}
+
+	payload, ok := authPayload.(*dependencies.Payload)
+	if !ok {
+		return "", domain.NewUnauthorizedError()
+	}
+
+	return payload.User(), nil
+}
+
 func bearerTokenMiddleware(tokener dependencies.Tokener) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
-		bearerHeader := ctx.GetHeader("authorization")
+		bearerHeader := ctx.GetHeader("Authorization")
 		if len(bearerHeader) == 0 {
 			ctx.AbortWithStatusJSON(http.StatusUnauthorized, domain.NewUnauthorizedError())
 			return

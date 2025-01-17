@@ -14,7 +14,7 @@ import (
 	"gorm.io/gorm"
 )
 
-func TestUserCreate(t *testing.T) {
+func TestUserRegister(t *testing.T) {
 	db := setupTestDB()
 	repository := database.NewUserPostgresRepository(db)
 
@@ -50,7 +50,7 @@ func TestUserDelete(t *testing.T) {
 	assert.Equal(t, gorm.ErrRecordNotFound, err)
 }
 
-func TestUserUpdate(t *testing.T) {
+func TestUserUpdateMe(t *testing.T) {
 	db := setupTestDB()
 	repository := database.NewUserPostgresRepository(db)
 
@@ -67,7 +67,7 @@ func TestUserUpdate(t *testing.T) {
 	require.Equal(t, user.Name, result.Name)
 }
 
-func TestUserOne(t *testing.T) {
+func TestUserMe(t *testing.T) {
 	db := setupTestDB()
 	repository := database.NewUserPostgresRepository(db)
 

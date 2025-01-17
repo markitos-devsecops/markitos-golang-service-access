@@ -16,7 +16,6 @@ func NewUserInMemoryRepository() *UserInMemoryRepository {
 
 func (s *UserInMemoryRepository) Create(user *User) error {
 	s.users[user.Id] = user
-
 	return nil
 }
 
@@ -25,7 +24,6 @@ func (s *UserInMemoryRepository) Delete(id *string) error {
 		return errors.New("user not found")
 	}
 	delete(s.users, *id)
-
 	return nil
 }
 
@@ -34,7 +32,6 @@ func (s *UserInMemoryRepository) One(id *string) (*User, error) {
 	if !exists {
 		return nil, errors.New("user not found")
 	}
-
 	return user, nil
 }
 
@@ -45,7 +42,6 @@ func (s *UserInMemoryRepository) Update(user *User) error {
 	}
 	existingUser.Name = user.Name
 	existingUser.UpdatedAt = user.UpdatedAt
-
 	return nil
 }
 
@@ -55,6 +51,5 @@ func (s *UserInMemoryRepository) OneFromEmail(email string) (*User, error) {
 			return user, nil
 		}
 	}
-
 	return nil, errors.New("user not found")
 }

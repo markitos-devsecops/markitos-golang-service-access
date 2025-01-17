@@ -10,12 +10,12 @@ import (
 )
 
 func TestCanCreateAUser(t *testing.T) {
-	var request services.UserCreateRequest = services.UserCreateRequest{
+	var request services.UserRegisterRequest = services.UserRegisterRequest{
 		Name:     VALID_NAME,
 		Email:    VALID_EMAIL,
 		Password: domain.RandomPassword(10),
 	}
-	response, err := userCreateService.Execute(request)
+	response, err := userRegisterService.Execute(request)
 
 	require.NoError(t, err)
 	require.True(t, domain.IsUUIDv4(response.Id))
@@ -24,12 +24,12 @@ func TestCanCreateAUser(t *testing.T) {
 }
 
 func TestCantCreateAUserWithEmptyName(t *testing.T) {
-	var request services.UserCreateRequest = services.UserCreateRequest{
+	var request services.UserRegisterRequest = services.UserRegisterRequest{
 		Name:     "",
 		Email:    VALID_EMAIL,
 		Password: domain.RandomPassword(10),
 	}
-	response, err := userCreateService.Execute(request)
+	response, err := userRegisterService.Execute(request)
 	require.Nil(t, response)
 	require.Error(t, err)
 

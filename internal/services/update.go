@@ -6,35 +6,35 @@ import (
 	"time"
 )
 
-type UserUpdateRequestUri struct {
+type UserUpdateMeRequestUri struct {
 	Id string `uri:"id" binding:"required,uuid"`
 }
 
-type UserUpdateRequestBody struct {
+type UserUpdateMeRequestBody struct {
 	Name string `json:"name" binding:"required"`
 }
 
-type UserUpdateRequest struct {
+type UserUpdateMeRequest struct {
 	Id   string `uri:"id" binding:"required,uuid"`
 	Name string `json:"name" binding:"required"`
 }
 
-func NewUserUpdateRequest(id string, name string) *UserUpdateRequest {
-	return &UserUpdateRequest{
+func NewUserUpdateMeRequest(id string, name string) *UserUpdateMeRequest {
+	return &UserUpdateMeRequest{
 		Id:   id,
 		Name: name,
 	}
 }
 
-type UserUpdateService struct {
+type UserUpdateMeService struct {
 	Repository dependencies.UserRepository
 }
 
-func NewUserUpdateService(repository dependencies.UserRepository) UserUpdateService {
-	return UserUpdateService{Repository: repository}
+func NewUserUpdateMeService(repository dependencies.UserRepository) UserUpdateMeService {
+	return UserUpdateMeService{Repository: repository}
 }
 
-func (s *UserUpdateService) Execute(request UserUpdateRequest) (*domain.User, error) {
+func (s *UserUpdateMeService) Execute(request UserUpdateMeRequest) (*domain.User, error) {
 	securedId, err := domain.NewUserId(request.Id)
 	if err != nil {
 		return nil, err

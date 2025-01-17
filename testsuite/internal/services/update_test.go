@@ -10,15 +10,15 @@ import (
 )
 
 func TestCanUpdateAUser(t *testing.T) {
-	var request services.UserCreateRequest = services.UserCreateRequest{
+	var request services.UserRegisterRequest = services.UserRegisterRequest{
 		Name:     VALID_NAME,
 		Email:    VALID_EMAIL,
 		Password: domain.RandomPassword(10),
 	}
-	createdUser, err := userCreateService.Execute(request)
+	createdUser, err := userRegisterService.Execute(request)
 	require.NoError(t, err)
 
-	model, err := userUpdateService.Execute(services.UserUpdateRequest{
+	model, err := userUpdateMeService.Execute(services.UserUpdateMeRequest{
 		Id:   createdUser.Id,
 		Name: createdUser.Name + " updated",
 	})
@@ -32,12 +32,12 @@ func TestCanUpdateAUser(t *testing.T) {
 }
 
 func TestCantUpdatOneUserWithEmptyName(t *testing.T) {
-	var request services.UserUpdateRequest = services.UserUpdateRequest{
+	var request services.UserUpdateMeRequest = services.UserUpdateMeRequest{
 		Id:   VALID_UUIDV4,
 		Name: "",
 	}
 
-	response, err := userUpdateService.Execute(request)
+	response, err := userUpdateMeService.Execute(request)
 	require.Nil(t, response)
 	require.Error(t, err)
 
@@ -47,12 +47,12 @@ func TestCantUpdatOneUserWithEmptyName(t *testing.T) {
 }
 
 func TestCantUpdatOneUserWithEmptyId(t *testing.T) {
-	var request services.UserUpdateRequest = services.UserUpdateRequest{
+	var request services.UserUpdateMeRequest = services.UserUpdateMeRequest{
 		Id:   "",
 		Name: VALID_NAME,
 	}
 
-	response, err := userUpdateService.Execute(request)
+	response, err := userUpdateMeService.Execute(request)
 	require.Nil(t, response)
 	require.Error(t, err)
 
@@ -62,12 +62,12 @@ func TestCantUpdatOneUserWithEmptyId(t *testing.T) {
 }
 
 func TestCantUpdatOneUserWithInvalidId(t *testing.T) {
-	var request services.UserUpdateRequest = services.UserUpdateRequest{
+	var request services.UserUpdateMeRequest = services.UserUpdateMeRequest{
 		Id:   "invalid-id",
 		Name: VALID_NAME,
 	}
 
-	response, err := userUpdateService.Execute(request)
+	response, err := userUpdateMeService.Execute(request)
 	require.Nil(t, response)
 	require.Error(t, err)
 

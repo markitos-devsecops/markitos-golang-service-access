@@ -35,7 +35,7 @@ func TestTokenerJWTCanCreateAValidJWTToken(t *testing.T) {
 	require.NoError(t, err)
 	require.NotEmpty(t, validatedPayload)
 	require.Equal(t, masterTokenValue, validatedPayload.MasterValue)
-	require.WithinDuration(t, issuedAt, validatedPayload.IssueddAt, time.Second)
+	require.WithinDuration(t, issuedAt, validatedPayload.IssuedAt, time.Second)
 	require.WithinDuration(t, expireAt, validatedPayload.ExpiredAt, time.Second)
 }
 
