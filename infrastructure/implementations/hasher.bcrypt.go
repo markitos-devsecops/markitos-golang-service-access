@@ -1,7 +1,6 @@
 package implementations
 
 import (
-	"fmt"
 	"markitos-golang-service-access/internal/domain"
 
 	"golang.org/x/crypto/bcrypt"
@@ -25,7 +24,6 @@ func (h HasherBCrypt) Create(content string) (string, error) {
 	}
 	hashed, err := bcrypt.GenerateFromPassword([]byte(content), bcrypt.DefaultCost)
 	if err != nil {
-		fmt.Println("error en create hash", err)
 		return "", domain.NewUnexpectedResultError(HASHER_BCRYPT_TAG_FOR_EMPTY_ERROR)
 	}
 
@@ -34,7 +32,6 @@ func (h HasherBCrypt) Create(content string) (string, error) {
 func (h HasherBCrypt) Validate(hashedContent, rawContent string) bool {
 	err := bcrypt.CompareHashAndPassword([]byte(hashedContent), []byte(rawContent))
 	if err != nil {
-		fmt.Println("error en validate hash", err)
 		return false
 	}
 

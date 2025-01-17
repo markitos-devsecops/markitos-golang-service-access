@@ -3,7 +3,6 @@ package api_test
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"markitos-golang-service-access/infrastructure/api"
 	"markitos-golang-service-access/infrastructure/implementations"
 	"markitos-golang-service-access/internal/domain"
@@ -68,7 +67,6 @@ func createUserAndLogin(t *testing.T) (*domain.User, string) {
 	request.Header.Set("Content-Type", "application/json")
 
 	userApiServer.Router().ServeHTTP(recorder, request)
-	fmt.Println(">>>> REQUEST: ", recorder)
 	require.Equal(t, http.StatusOK, recorder.Code)
 
 	var loginResponse map[string]string
