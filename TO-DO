@@ -9,4 +9,5 @@
 - test con auth middleware de  one y update
 - update must be changeName
 - create changePassword
+- create canI siempre con token
 - pensando en el recovery - publish event ?
