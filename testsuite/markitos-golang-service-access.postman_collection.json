@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "d05f3fca-5f31-4347-9252-9b550588639d",
+		"_postman_id": "4dafcefd-17f7-4b98-838e-c1498e784bfb",
 		"name": "markitos-golang-service-access",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		"_exporter_id": "40277391"
@@ -15,14 +15,16 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3000/",
+							"raw": "http://localhost:3000/v1/users/motd",
 							"protocol": "http",
 							"host": [
 								"localhost"
 							],
 							"port": "3000",
 							"path": [
-								""
+								"v1",
+								"users",
+								"motd"
 							]
 						}
 					},
@@ -41,6 +43,7 @@
 							],
 							"port": "3000",
 							"path": [
+								"v1",
 								"users"
 							]
 						}
@@ -60,6 +63,7 @@
 							],
 							"port": "3000",
 							"path": [
+								"v1",
 								"users",
 								"4f142ef5-f542-4a7b-8cd2-d8c46a07983d"
 							]
@@ -80,6 +84,7 @@
 							],
 							"port": "3000",
 							"path": [
+								"v1",
 								"users",
 								"4f142ef5-f542-4a7b-8cd2-d8c46a07983d"
 							]
@@ -94,7 +99,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"name\": \"Ho22la2\"\n}",
+							"raw": "{\n    \"name\": \"mail\",\n    \"email\": \"mail1@mail1.com\",\n    \"password\": \"Mail1@mail1.com\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -109,7 +114,38 @@
 							],
 							"port": "3000",
 							"path": [
+								"v1",
 								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"mail1@mail1.com\",\n    \"password\": \"Mail1@mail1.com\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:3000/v1/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"v1",
+								"users",
+								"login"
 							]
 						}
 					},
@@ -137,6 +173,7 @@
 							],
 							"port": "3000",
 							"path": [
+								"v1",
 								"users",
 								"21b513c0-0c67-4977-9dfd-a3238065552c"
 							]

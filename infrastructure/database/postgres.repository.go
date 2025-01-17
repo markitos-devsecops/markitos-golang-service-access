@@ -61,9 +61,9 @@ func (r *UserPostgresRepository) SearchAndPaginate(searchTerm string, pageNumber
 	return users, nil
 }
 
-func (r *UserPostgresRepository) OneFromEmailAndPassword(email, password string) (*domain.User, error) {
+func (r *UserPostgresRepository) OneFromEmail(email string) (*domain.User, error) {
 	var user domain.User
-	if err := r.db.First(&user, "email = ? AND password = ?", email, password).Error; err != nil {
+	if err := r.db.First(&user, "email = ?", email).Error; err != nil {
 		return nil, err
 	}
 

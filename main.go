@@ -18,20 +18,13 @@ func main() {
 	log.Println("['.']:>")
 	log.Println("['.']:>--------------------------------------------")
 	log.Println("['.']:>--- <starting markitos-golang-service-access>")
-
-	config := loadConfiguration()
-	log.Println("['.']:>------- Configuration loaded")
-	tokener, err := implementations.NewTokenerJWT(config.SymmetricKey)
-	if err != nil {
-		log.Fatal("['.']:> error unable to create tokener: ", err)
-	}
 	hasher := implementations.NewHasherBCrypt()
-
+	config := loadConfiguration()
+	tokener := loadTokener(config)
 	repository, err := loadDatabase(config)
 	if err != nil {
 		log.Fatal(err)
 	}
-
 	server := loadServer(config, repository, tokener, hasher)
 	log.Println("['.']:>--- </starting markitos-golang-service-access>")
 	log.Println("['.']:>--------------------------------------------")
@@ -40,6 +33,14 @@ func main() {
 	if err != nil {
 		log.Fatal("unable to start server: ", err)
 	}
+}
+
+func loadTokener(config configuration.MarkitosGolangServiceAccessConfig) dependencies.Tokener {
+	tokener, err := implementations.NewTokenerPasseto(config.SymmetricKey)
+	if err != nil {
+		log.Fatal("['.']:> error unable to create tokener: ", err)
+	}
+	return tokener
 }
 
 func loadServer(

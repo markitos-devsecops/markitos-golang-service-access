@@ -51,15 +51,15 @@ func (e *UserInvalidNameError) Error() string {
 const USER_INVALID_NAME_FORMAT = "the name can only contain letters and spaces and must start and end with a letter"
 
 type UserInvalidNameFormatError struct {
-	email string
+	value string
 }
 
-func NewUserInvalidNameFormatError(email string) error {
-	return &UserInvalidNameFormatError{email: email}
+func NewUserInvalidNameFormatError(value string) error {
+	return &UserInvalidNameFormatError{value: value}
 }
 
 func (e *UserInvalidNameFormatError) Error() string {
-	return fmt.Sprintf("%s: %s", USER_INVALID_EMAIL_FORMAT, e.email)
+	return fmt.Sprintf("%s: %s", USER_INVALID_NAME_FORMAT, e.value)
 }
 
 // --------------------------------------------------------------
@@ -209,7 +209,7 @@ func (e *TokenerExpiredError) Error() string {
 	return ERROR_TOKENER_VALIDATION
 }
 
-const ERROR_USER_UNAUTHORIZED = "user its not authorized"
+const ERROR_USER_UNAUTHORIZED = "authorized action"
 
 type UserUnauthorizedError struct {
 }

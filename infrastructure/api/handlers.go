@@ -1,6 +1,7 @@
 package api
 
 import (
+	"log"
 	"markitos-golang-service-access/internal/services"
 	"net/http"
 	"os"
@@ -17,7 +18,7 @@ func (s *Server) userCreateHandler(ctx *gin.Context) {
 		return
 	}
 
-	var service services.UserCreateService = services.NewUserCreateService(s.repository)
+	var service services.UserCreateService = services.NewUserCreateService(s.repository, s.hasher)
 	user, err := service.Execute(request)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, errorResonses(err))
@@ -137,9 +138,10 @@ func (s *Server) userLoginHandler(ctx *gin.Context) {
 	}
 
 	var service services.UserLoginService = services.NewUserLoginService(s.repository, s.hasher, s.tokener)
+	log.Println("request", request)
 	user, err := service.Execute(request)
 	if err != nil {
-		ctx.JSON(http.StatusBadRequest, errorResonses(err))
+		ctx.JSON(http.StatusUnauthorized, errorResonses(err))
 		return
 	}
 

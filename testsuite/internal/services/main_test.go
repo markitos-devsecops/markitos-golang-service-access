@@ -25,7 +25,7 @@ func TestMain(m *testing.M) {
 	userMockSpyHasher = NewMockSpyUserHasher()
 	userMockSpyTokener = NewMockSpyUserTokener()
 
-	userCreateService = services.NewUserCreateService(userMockSpyRepository)
+	userCreateService = services.NewUserCreateService(userMockSpyRepository, userMockSpyHasher)
 	userOneService = services.NewUserOneService(userMockSpyRepository)
 	userListService = services.NewUserListService(userMockSpyRepository)
 	userUpdateService = services.NewUserUpdateService(userMockSpyRepository)

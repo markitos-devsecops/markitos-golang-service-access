@@ -146,14 +146,14 @@ func TestSearchAndPagination(t *testing.T) {
 	cleanDB(db)
 }
 
-// func TestOneFromEmailAndPassword(t *testing.T) {
+// func TestOneFromEmail(t *testing.T) {
 // 	db := setupTestDB()
 // 	repo := database.NewUserPostgresRepository(db)
 
 // 	user, _ := domain.NewUser(domain.UUIDv4(), domain.RandomPersonName(), "email@email.com", "anyPassw0d")
 // 	db.Create(user)
 
-// 	result, err := repo.OneFromEmailAndPassword(user.Email, user.Password)
+// 	result, err := repo.OneFromEmail(user.Email, user.Password)
 // 	require.NoError(t, err)
 // 	require.NotNil(t, result)
 // 	require.Equal(t, user.Id, result.Id)

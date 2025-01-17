@@ -3,24 +3,24 @@ package services_test
 import "markitos-golang-service-access/internal/domain"
 
 type MockSpyUserRepository struct {
-	LastCreatedUser                        *domain.User
-	LastCreatedForOneUser                  *domain.User
-	OneCalled                              bool
-	LastUpdatedUser                        *domain.User
-	LastOneFromEmailAndPasswordEmail       string
-	LastOneFromEmailAndPasswordPassword    string
-	LastOneFromEmailAndPasswordEmailCalled bool
+	LastCreatedUser             *domain.User
+	LastCreatedForOneUser       *domain.User
+	OneCalled                   bool
+	LastUpdatedUser             *domain.User
+	LastOneFromEmailEmail       string
+	LastOneFromEmailPassword    string
+	LastOneFromEmailEmailCalled bool
 }
 
 func NewMockSpyUserRepository() *MockSpyUserRepository {
 	return &MockSpyUserRepository{
-		LastCreatedUser:                        nil,
-		LastCreatedForOneUser:                  nil,
-		OneCalled:                              false,
-		LastUpdatedUser:                        nil,
-		LastOneFromEmailAndPasswordEmail:       "",
-		LastOneFromEmailAndPasswordPassword:    "",
-		LastOneFromEmailAndPasswordEmailCalled: false,
+		LastCreatedUser:             nil,
+		LastCreatedForOneUser:       nil,
+		OneCalled:                   false,
+		LastUpdatedUser:             nil,
+		LastOneFromEmailEmail:       "",
+		LastOneFromEmailPassword:    "",
+		LastOneFromEmailEmailCalled: false,
 	}
 }
 
@@ -73,16 +73,15 @@ func (m *MockSpyUserRepository) SearchAndPaginate(searchTerm string, pageNumber 
 	}, nil
 }
 
-func (m *MockSpyUserRepository) OneFromEmailAndPassword(email, password string) (*domain.User, error) {
-	m.LastOneFromEmailAndPasswordEmail = email
-	m.LastOneFromEmailAndPasswordPassword = password
-	m.LastOneFromEmailAndPasswordEmailCalled = true
+func (m *MockSpyUserRepository) OneFromEmail(email string) (*domain.User, error) {
+	m.LastOneFromEmailEmail = email
+	m.LastOneFromEmailEmailCalled = true
 
 	return &domain.User{
 		Id:       VALID_UUIDV4,
 		Name:     VALID_NAME,
 		Email:    email,
-		Password: password,
+		Password: domain.RandomPassword(10),
 	}, nil
 }
 

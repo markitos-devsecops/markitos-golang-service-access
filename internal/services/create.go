@@ -16,19 +16,24 @@ func NewBolilerCreateRequest(name string) UserCreateRequest {
 }
 
 type UserCreateService struct {
-	Repository dependencies.UserRepository
+	Repository     dependencies.UserRepository
+	PasswordHasher dependencies.Hasher
 }
 
-func NewUserCreateService(repository dependencies.UserRepository) UserCreateService {
-	return UserCreateService{Repository: repository}
+func NewUserCreateService(repository dependencies.UserRepository, hasher dependencies.Hasher) UserCreateService {
+	return UserCreateService{Repository: repository, PasswordHasher: hasher}
 }
 
 func (s *UserCreateService) Execute(request UserCreateRequest) (*domain.User, error) {
-	var hashedPassword string = request.Password
-	user, err := domain.NewUser(domain.UUIDv4(), request.Name, request.Email, hashedPassword)
+	user, err := domain.NewUser(domain.UUIDv4(), request.Name, request.Email, request.Password)
 	if err != nil {
 		return nil, err
 	}
+	hashedPassword, err := s.PasswordHasher.Create(request.Password)
+	if err != nil {
+		return nil, err
+	}
+	user.Password = hashedPassword
 
 	err = s.Repository.Create(user)
 	if err != nil {

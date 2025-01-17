@@ -44,7 +44,10 @@ func (s *Server) createRouter() *gin.Engine {
 	router := gin.Default()
 	router.POST("/v1/users", s.userCreateHandler)
 	router.POST("/v1/users/login", s.userLoginHandler)
-	router.GET("/v1/users/all", s.userListHandler)
+
+	protectedRoutes := router.Group("/").Use(bearerTokenMiddleware(s.tokener))
+	protectedRoutes.GET("/v1/users/all", s.userListHandler)
+
 	router.GET("/v1/users/:id", s.userOneHandler)
 	router.PUT("/v1/users/:id", s.userUpdateHandler)
 	router.GET("/v1/users/motd", s.userMotdHandler)

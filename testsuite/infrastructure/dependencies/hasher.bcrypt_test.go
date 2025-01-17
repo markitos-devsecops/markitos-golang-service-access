@@ -27,11 +27,10 @@ func TestCanCreateABcryptToken(t *testing.T) {
 }
 
 func TestCanValidateABcryptToken(t *testing.T) {
-	bcrypt := implementations.NewHasherBCrypt()
-	hashedContent, err := bcrypt.Create("any string value")
+	hashedContent, err := hasher.Create("any string value")
 	require.NoError(t, err)
 	require.Nil(t, err)
 
-	require.True(t, bcrypt.Validate(hashedContent, "any string value"))
-	require.False(t, bcrypt.Validate(hashedContent, "any string valu"))
+	require.True(t, hasher.Validate(hashedContent, "any string value"))
+	require.False(t, hasher.Validate(hashedContent, "any string valu"))
 }
