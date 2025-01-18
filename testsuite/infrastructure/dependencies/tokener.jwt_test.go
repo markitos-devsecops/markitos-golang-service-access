@@ -19,13 +19,13 @@ const (
 )
 
 func TestTokenerJWTCanCreateAValidJWTToken(t *testing.T) {
-	var masterTokenValue string = domain.UUIDv4()
+	var entity string = domain.UUIDv4()
 	var duration time.Duration = time.Minute
 	var issuedAt time.Time = time.Now()
 	var expireAt time.Time = issuedAt.Add(duration)
 
 	tokener := CreateTokenerJWT(t)
-	token, err := tokener.Create(masterTokenValue, duration)
+	token, err := tokener.Create(entity, duration)
 	require.NoError(t, err)
 	require.NotEmpty(t, token)
 	parts := strings.Split(token, ".")
@@ -34,17 +34,17 @@ func TestTokenerJWTCanCreateAValidJWTToken(t *testing.T) {
 	validatedPayload, err := tokener.Validate(token)
 	require.NoError(t, err)
 	require.NotEmpty(t, validatedPayload)
-	require.Equal(t, masterTokenValue, validatedPayload.MasterValue)
+	require.Equal(t, entity, validatedPayload.Entity)
 	require.WithinDuration(t, issuedAt, validatedPayload.IssuedAt, time.Second)
 	require.WithinDuration(t, expireAt, validatedPayload.ExpiredAt, time.Second)
 }
 
 func TestTokenerJWTExpiredToken(t *testing.T) {
-	var masterTokenValue string = domain.UUIDv4()
+	var entity string = domain.UUIDv4()
 	var duration time.Duration = -time.Minute
 
 	tokener := CreateTokenerJWT(t)
-	token, err := tokener.Create(masterTokenValue, duration)
+	token, err := tokener.Create(entity, duration)
 	require.NoError(t, err)
 	require.NotEmpty(t, token)
 
@@ -55,11 +55,11 @@ func TestTokenerJWTExpiredToken(t *testing.T) {
 }
 
 func TestTokenerJWTInvalidSignatureToken(t *testing.T) {
-	var masterTokenValue string = domain.UUIDv4()
+	var entity string = domain.UUIDv4()
 	var duration time.Duration = time.Minute
 
 	tokener := CreateTokenerJWT(t)
-	token, err := tokener.Create(masterTokenValue, duration)
+	token, err := tokener.Create(entity, duration)
 	require.NoError(t, err)
 	require.NotEmpty(t, token)
 
@@ -74,11 +74,11 @@ func TestTokenerJWTInvalidSignatureToken(t *testing.T) {
 }
 
 func TestTokenerJWTManipulatedToken(t *testing.T) {
-	var masterTokenValue string = domain.UUIDv4()
+	var entity string = domain.UUIDv4()
 	var duration time.Duration = time.Minute
 
 	tokener := CreateTokenerJWT(t)
-	token, err := tokener.Create(masterTokenValue, duration)
+	token, err := tokener.Create(entity, duration)
 	require.NoError(t, err)
 	require.NotEmpty(t, token)
 
@@ -93,11 +93,11 @@ func TestTokenerJWTManipulatedToken(t *testing.T) {
 }
 
 func TestTokenerJWTInvalidSecretKeySize(t *testing.T) {
-	var masterTokenValue string = domain.UUIDv4()
+	var entity string = domain.UUIDv4()
 	var duration time.Duration = time.Minute
 
 	tokener := CreateTokenerJWT(t)
-	token, err := tokener.Create(masterTokenValue, duration)
+	token, err := tokener.Create(entity, duration)
 	require.NoError(t, err)
 	require.NotEmpty(t, token)
 
@@ -109,11 +109,11 @@ func TestTokenerJWTInvalidSecretKeySize(t *testing.T) {
 }
 
 func TestTokenerJWTNoneAlgorithmAttack(t *testing.T) {
-	var masterTokenValue string = domain.UUIDv4()
+	var entity string = domain.UUIDv4()
 	var duration time.Duration = time.Minute
 
 	tokener := CreateTokenerJWT(t)
-	token, err := tokener.Create(masterTokenValue, duration)
+	token, err := tokener.Create(entity, duration)
 	require.NoError(t, err)
 	require.NotEmpty(t, token)
 

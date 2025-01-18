@@ -13,26 +13,26 @@ const (
 )
 
 type Tokener interface {
-	Create(masterValue string, expireAt time.Duration) (string, error)
+	Create(entity string, expireAt time.Duration) (string, error)
 	Validate(token string) (*Payload, error)
 }
 
 type Payload struct {
-	MasterValue string    `json:"master_value"`
-	IssuedAt    time.Time `json:"issued_at"`
-	ExpiredAt   time.Time `json:"expired_at"`
+	Entity    string    `json:"master_value"`
+	IssuedAt  time.Time `json:"issued_at"`
+	ExpiredAt time.Time `json:"expired_at"`
 }
 
-func NewPayload(masterValue string, duration time.Duration) *Payload {
+func NewPayload(entity string, duration time.Duration) *Payload {
 	return &Payload{
-		MasterValue: masterValue,
-		IssuedAt:    time.Now(),
-		ExpiredAt:   time.Now().Add(duration),
+		Entity:    entity,
+		IssuedAt:  time.Now(),
+		ExpiredAt: time.Now().Add(duration),
 	}
 }
 
 func (p *Payload) User() string {
-	return p.MasterValue
+	return p.Entity
 }
 
 func NewPayloadFromToken(parsedToken map[string]interface{}) (*Payload, error) {
@@ -48,15 +48,15 @@ func NewPayloadFromToken(parsedToken map[string]interface{}) (*Payload, error) {
 	}
 	issuedAt := time.Unix(int64(iatUnix), 0)
 
-	masterValue, ok := parsedToken[TOKENER_MASTER_VALUE_JWT_KEY].(string)
+	entity, ok := parsedToken[TOKENER_MASTER_VALUE_JWT_KEY].(string)
 	if !ok {
 		return nil, domain.NewTokenerValidationError(fmt.Sprintf("error, field %s not found or with incorrect type", TOKENER_MASTER_VALUE_JWT_KEY))
 	}
 
 	return &Payload{
-		MasterValue: masterValue,
-		IssuedAt:    issuedAt,
-		ExpiredAt:   expiredAt,
+		Entity:    entity,
+		IssuedAt:  issuedAt,
+		ExpiredAt: expiredAt,
 	}, nil
 }
 

@@ -2,16 +2,18 @@ package api
 
 import (
 	"markitos-golang-service-access/internal/domain/dependencies"
+	"time"
 
 	"github.com/gin-gonic/gin"
 )
 
 type Server struct {
-	address    string
-	repository dependencies.UserRepository
-	tokener    dependencies.Tokener
-	hasher     dependencies.Hasher
-	router     *gin.Engine
+	address       string
+	repository    dependencies.UserRepository
+	tokener       dependencies.Tokener
+	TokenDuration time.Duration
+	hasher        dependencies.Hasher
+	router        *gin.Engine
 }
 
 func (s *Server) Router() *gin.Engine {
@@ -26,13 +28,15 @@ func NewServer(
 	address string,
 	repository dependencies.UserRepository,
 	tokener dependencies.Tokener,
+	tokenDuration time.Duration,
 	hasher dependencies.Hasher) *Server {
 
 	server := &Server{
-		address:    address,
-		repository: repository,
-		tokener:    tokener,
-		hasher:     hasher,
+		address:       address,
+		repository:    repository,
+		TokenDuration: tokenDuration,
+		tokener:       tokener,
+		hasher:        hasher,
 	}
 
 	server.router = server.createRouter()

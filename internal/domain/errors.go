@@ -1,6 +1,7 @@
 package domain
 
 import (
+	"errors"
 	"fmt"
 )
 
@@ -221,3 +222,7 @@ func NewUnauthorizedError() error {
 func (e *UserUnauthorizedError) Error() string {
 	return ERROR_USER_UNAUTHORIZED
 }
+
+var (
+	ErrUserAlreadyExists error = errors.New("user already exists")
+)

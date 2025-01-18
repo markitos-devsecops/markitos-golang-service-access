@@ -49,7 +49,8 @@ func loadServer(
 	tokener dependencies.Tokener,
 	hasher dependencies.Hasher) *api.Server {
 	gin.SetMode(gin.ReleaseMode)
-	server := api.NewServer(config.AppAddress, repository, tokener, hasher)
+	server := api.NewServer(config.AppAddress, repository, tokener, config.TokenDuration, hasher)
+	log.Println("['.']:>------- Tokener created with duration: ", config.TokenDuration)
 	log.Println("['.']:>------- New server created")
 	return server
 }

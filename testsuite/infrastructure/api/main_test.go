@@ -11,6 +11,7 @@ import (
 	"net/http/httptest"
 	"os"
 	"testing"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/require"
@@ -33,7 +34,7 @@ func TestMain(m *testing.M) {
 func setupTestServer() *api.Server {
 	gin.SetMode(gin.TestMode)
 
-	return api.NewServer(":8080", userRepository, userTokener, userHasher)
+	return api.NewServer(":8080", userRepository, userTokener, time.Minute, userHasher)
 }
 
 func createUserAndLogin(t *testing.T) (*domain.User, string) {

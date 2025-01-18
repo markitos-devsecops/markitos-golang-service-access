@@ -27,15 +27,15 @@ func NewTokenerJWT(secretKey string) (dependencies.Tokener, error) {
 	}, nil
 }
 
-func (t TokenerJWT) Create(masterValue string, expireAt time.Duration) (string, error) {
-	if len(masterValue) == 0 {
+func (t TokenerJWT) Create(entity string, expireAt time.Duration) (string, error) {
+	if len(entity) == 0 {
 		return "", domain.NewTokenerInvalidKeyLengthError()
 	}
 
-	payload := dependencies.NewPayload(masterValue, expireAt)
+	payload := dependencies.NewPayload(entity, expireAt)
 
 	claims := jwt.MapClaims{
-		dependencies.TOKENER_MASTER_VALUE_JWT_KEY: payload.MasterValue,
+		dependencies.TOKENER_MASTER_VALUE_JWT_KEY: payload.Entity,
 		dependencies.TOKENER_ISSUED_AT_JWT_KEY:    payload.IssuedAt.Unix(),
 		dependencies.TOKENER_EXPIRED_AT_JWT_KEY:   payload.ExpiredAt.Unix(),
 	}

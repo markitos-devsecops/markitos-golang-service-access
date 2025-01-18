@@ -1,5 +1,7 @@
+- los errores como el ultimo y con convenio 
+ErrUserAlreadyExists error = errors.New("user already exists")
+
 - revisar bien los tests e2e tienen mucha mejora no me gustan nada
-- poner config pero human redeable tipo 24h 55m asi, TokenDuration time.Duration `mapstructure:"APP_TOKEN_DURATION"`
 - el login debe devolver datos de usuarios no solo token, al menos id y nombre personal
 - update documentation
 - anemiar proyecto :)
@@ -12,5 +14,5 @@
 - create changePassword
 - create canI siempre con token
 - pensando en el recovery - publish event ?
-- mastervalues = user
+- entitys = user
 - el id no esta claro su procedencia no hay normas, ponla

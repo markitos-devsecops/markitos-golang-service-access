@@ -28,12 +28,12 @@ func NewTokenerPasseto(secretKey string) (dependencies.Tokener, error) {
 	}, nil
 }
 
-func (t TokenerPasseto) Create(masterValue string, expireAt time.Duration) (string, error) {
-	if len(masterValue) == 0 {
+func (t TokenerPasseto) Create(entity string, expireAt time.Duration) (string, error) {
+	if len(entity) == 0 {
 		return "", domain.NewTokenerInvalidKeyLengthError()
 	}
 
-	payload := dependencies.NewPayload(masterValue, expireAt)
+	payload := dependencies.NewPayload(entity, expireAt)
 	token, err := t.paseto.Encrypt(t.secretKey, payload, nil)
 	if err != nil {
 		return "", domain.NewTokenerValidationError("error creating token " + err.Error())

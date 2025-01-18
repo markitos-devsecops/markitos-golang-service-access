@@ -19,16 +19,16 @@ func NewMockSpyUserTokener() *MockSpyUserTokener {
 	}
 }
 
-func (m *MockSpyUserTokener) Create(masterValue string, expireAt time.Duration) (string, error) {
-	m.LastCreatedTokenMasteValue = masterValue
+func (m *MockSpyUserTokener) Create(entity string, expireAt time.Duration) (string, error) {
+	m.LastCreatedTokenMasteValue = entity
 	m.LastCreatedTokenExpireAt = expireAt
 
-	return masterValue, nil
+	return entity, nil
 
 }
 
-func (m *MockSpyUserTokener) CreateHaveBeenCalledWith(masterValue string, expireAt time.Duration) bool {
-	var result bool = m.LastCreatedTokenMasteValue == masterValue && m.LastCreatedTokenExpireAt == expireAt
+func (m *MockSpyUserTokener) CreateHaveBeenCalledWith(entity string, expireAt time.Duration) bool {
+	var result bool = m.LastCreatedTokenMasteValue == entity && m.LastCreatedTokenExpireAt == expireAt
 
 	m.LastCreatedTokenMasteValue = ""
 	m.LastCreatedTokenExpireAt = 0

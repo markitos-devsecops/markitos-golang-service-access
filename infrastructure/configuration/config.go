@@ -1,13 +1,16 @@
 package configuration
 
 import (
+	"time"
+
 	"github.com/spf13/viper"
 )
 
 type MarkitosGolangServiceAccessConfig struct {
-	DsnDatabase  string `mapstructure:"APP_BBDD_DSN"`
-	AppAddress   string `mapstructure:"APP_ADDRESS"`
-	SymmetricKey string `mapstructure:"APP_SYMMETRIC_KEY"`
+	DsnDatabase   string        `mapstructure:"APP_BBDD_DSN"`
+	AppAddress    string        `mapstructure:"APP_ADDRESS"`
+	SymmetricKey  string        `mapstructure:"APP_SYMMETRIC_KEY"`
+	TokenDuration time.Duration `mapstructure:"APP_TOKEN_DURATION"`
 }
 
 func LoadConfiguration(

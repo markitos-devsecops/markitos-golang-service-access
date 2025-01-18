@@ -16,6 +16,13 @@ func NewUserPostgresRepository(db *gorm.DB) *UserPostgresRepository {
 }
 
 func (r *UserPostgresRepository) Create(user *domain.User) error {
+	existingUser, err := r.OneFromEmail(user.Email)
+	if err == nil {
+		if existingUser != nil {
+			return domain.ErrUserAlreadyExists
+		}
+	}
+
 	return r.db.Create(user).Error
 }
 
